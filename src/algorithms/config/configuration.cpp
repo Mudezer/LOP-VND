@@ -16,6 +16,20 @@ void Configuration::parseArguments(int argc, char **argv){
         exit(1);
     }
 
+    if(!(((string)argv[1]).compare("-i"))){
+        setFileName(argv[2]);
+    }
+    else{
+        cerr << "Incorrect arguments." << endl;
+        cerr << "Usage: ./lop -i <instance_name> --<algo_type> --<pivot_algorithm> --<neighborhood_modification> --<initialisation_type>  \n" << endl;
+        exit(1);
+    }
+
+
+//    for(int i = 0; i < argc; i++){
+//        cout << argv[i] << endl;
+//    }
+
     if(!(((string)argv[3]).compare("--iter"))){
         algorithmType = ITERATIVE;
         setPivotAlgorithm(argv[4]);
@@ -36,6 +50,10 @@ void Configuration::parseArguments(int argc, char **argv){
 
 
     }
+}
+
+void Configuration::setFileName(char *filename){
+    FileName = filename;
 }
 
 void Configuration::setPivotAlgorithm(char *pivot){

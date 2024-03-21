@@ -14,4 +14,5 @@ add_executable(LOP_VND src/main.cpp
         src/algorithms/pivots/first_improvement.cpp
         src/algorithms/config/configuration.cpp
         src/algorithms/solution/solution.cpp
+        src/algorithms/initialisation/Initialisation.cpp
 )

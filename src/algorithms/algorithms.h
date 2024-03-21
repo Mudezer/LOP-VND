@@ -10,15 +10,17 @@
 #include <string>
 #include "../skeleton/instance/instance.h"
 #include "config/configuration.h"
+#include "solution/solution.h"
+
 
 /*  Initialisation */
+vector<long int> computeInitialSolution(Instance &instance, int initialisationType);
 vector<long int> createRandomSolution(Instance &instance);
-
 vector<long int> createCWHeuristicSolution(Instance &instance);
 
 /*  Pivot    */
-vector<long int> firstImprovement(Instance &instance, vector<long int> s);
-vector<long int> bestImprovement(Instance &instance, vector<long int> s);
+vector<long int> firstImprovement(Instance &instance);
+vector<long int> bestImprovement(Instance &instance, Configuration &configuration);
 
 /* Operations */
 vector<long int> exchange(vector<long int> s, int i, int j);

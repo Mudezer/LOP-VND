@@ -5,7 +5,13 @@
 #ifndef LOP_VND_CONFIGURATION_H
 #define LOP_VND_CONFIGURATION_H
 
-#include "../algorithms.h"
+//#include "../algorithms.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+
 
 /* algorithmType */
 #define ITERATIVE 1
@@ -49,6 +55,7 @@ public:
     void setNeighborhoodModification(char *operation);
     void setInitializationType(char *initialization);
     void setVNDNeighborhood(char *vnd);
+    void setFileName(char *filename);
 
 
 

@@ -28,12 +28,6 @@ vector<long int> createCWHeuristicSolution(Instance &instance){
         usedRow[bestRow] = true;
     }
 
-    cout<< "CW Heuristic solution: ";
-    for(int i=0; i<instance.getPSize();i++){
-        cout<< s[i] << " ";
-    }
-    cout<<endl;
-
     return s;
 
 }

@@ -5,9 +5,12 @@
 
 #include "../algorithms.h"
 
-vector<long int> firstImprovement(Instance &instance, vector<long int> s){
+
+vector<long int> firstImprovement(Instance &instance){
 
 
+
+    vector<long int> s;
 
 
 

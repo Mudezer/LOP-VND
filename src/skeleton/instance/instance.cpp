@@ -58,6 +58,7 @@ void Instance::readInstance(const char *filename){
     long int val;
 
     file.open(filename);
+    cout << "Reading instance file: " << filename << endl;
 
     if(!file.is_open()){
         perror("readInstance");
@@ -85,8 +86,7 @@ void Instance::readInstance(const char *filename){
             Seed += (long int) CostMat[i][j];
 
     cout << "Seed used to initialize RNG: " << Seed << endl;
-    cout << endl;
-    cout << endl;
+
 
 }
 

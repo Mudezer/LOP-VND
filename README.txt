@@ -13,8 +13,8 @@ make clean
 *** To run on one instance:
 ./lop -i assets/instances/N-tiw56r72_250
 
-./lop --iter --first --transpose --cw -i assets/instances/N-tiw56r72_250
-./lop --vnd --first --cw -i assets/instances/N-tiw56r72_250
+./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --cw
+./lop -i assets/instances/N-tiw56r72_250 --vnd --first --cw
 
 
 
