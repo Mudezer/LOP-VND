@@ -37,31 +37,133 @@ vector<long int> bestImprovement(Instance &instance, Configuration &configuratio
 
     bestS = runNeighboorModifications(instance, configuration, s);
 
-    switch(configuration.getNeighborhoodModification()){
-        case TRANSPOSE:
-            cout << "Transpose Modification Based\n" << endl;
-            bestS = bestTranspose(instance, s);
-            break;
-        case EXCHANGE:
-            cout << "Exchange Modification Based\n" << endl;
-            bestS = bestExchange(instance, s);
-            break;
-        case INSERT:
-            cout << "Insert Modification Based\n" << endl;
-            bestS = bestInsert(instance, s);
-            break;
-        default:
-            cout << "Transpose Modification Based\n" << endl;
-            bestS = bestTranspose(instance, s);
-            break;
+    /* print the best solution */
+    cout << "Best solution: \n" << endl;
+    for(int i=0; i<instance.getPSize(); i++){
+        cout << bestS[i] << " ";
     }
+    cout << endl;
+
+    /* compute the best cost */
+    long long int bestCost = instance.computeCost(bestS);
+    cout << "Best cost: " << bestCost << endl;
+
+
 
     return s;
 }
 
-vector<long int> runNeighboorModificationst(Instance &instance, Configuration &config, vector<long int> initS){
+vector<long int> runNeighboorModifications(Instance &instance, Configuration &config, vector<long int> initS){
+
+    switch(config.getNeighborhoodModification()){
+        case TRANSPOSE:
+            cout << "Transpose Modification Based\n" << endl;
+            return bestTranspose(instance, initS);
+        case EXCHANGE:
+            cout << "Exchange Modification Based\n" << endl;
+            return bestExchange(instance, initS);
+        case INSERT:
+            cout << "Insert Modification Based\n" << endl;
+            return bestInsert(instance, initS);
+        default:
+            cout << "Default: Transpose Modification Based\n" << endl;
+            return bestTranspose(instance, initS);
+    }
+
+}
+
+vector<long int> bestTranspose(Instance &instance, vector<long int> s){
+    // final list we will return
+    vector<long int> bestS = s;
+    // best candidate list which will update the bestSolution list
+    vector<long int> bestCandidate = s;
+    // candidate list which will be used to test the cost
+    vector<long int> candidateS(instance.getPSize());
+    
+
+    long long int bestCost = instance.computeCost(s);
+    bool improvement = true;
+
+    while(improvement){
+        improvement = false;
+        for(int i = 0; i<s.size();i++){
+            for(int j = i; j<s.size();j++ ){
+                candidateS = transpose(bestS, j,i);
+                if(instance.computeCost(candidateS) > bestCost){
+                    bestCandidate = candidateS;
+                    bestCost = instance.computeCost(candidateS);
+                    improvement = true;
+                }
+            }
+        }
+        bestS = bestCandidate;
+    }
 
 
-    return initS;
+//    for(int i = 0; i<instance.getPSize(); i++){
+//        candidateS = transpose(bestS, i, i+1);
+//        actualCost = instance.computeCost(candidateS);
+//
+//        if(actualCost > bestCost){
+//            bestS = candidateS;
+//            bestCost = actualCost;
+//        }
+//    }
+
+
+    return bestS;
+}
+
+vector<long int> bestInsert(Instance &instance, vector<long int> s) {
+    vector<long int> bestS = s;
+    vector<long int> bestCandidate = s;
+    vector<long int> candidateS(instance.getPSize());
+    long long int bestCost = instance.computeCost(s);
+    bool improvement = true;
+
+    while(improvement){
+        improvement = false;
+        for(int i = 0; i<s.size();i++){
+            for(int j = i+1; j<s.size(); j++){
+                candidateS = insert(bestCandidate, i, j);
+                if(instance.computeCost(candidateS) > bestCost){
+                    bestCandidate = candidateS;
+                    bestCost = instance.computeCost(candidateS);
+                    improvement = true;
+                }
+
+            }
+        }
+        bestS = bestCandidate;
+    }
+
+    return bestS;
+
+}
+
+vector<long int> bestExchange(Instance &instance, vector<long int> s) {
+    vector<long int> bestS = s;
+    vector<long int> bestCandidate = s;
+    vector<long int> candidateS(instance.getPSize());
+    long long int bestCost = instance.computeCost(s);
+    bool improvement = true;
+
+    while(improvement){
+        improvement = false;
+        for(int i = 0; i<s.size(); i++){
+            for(int j = i+1; j<s.size(); j++){
+                candidateS = exchange(bestCandidate, i, j);
+                if(instance.computeCost(candidateS) > bestCost){
+                    bestCandidate = candidateS;
+                    bestCost = instance.computeCost(candidateS);
+                    improvement = true;
+                }
+            }
+        }
+        bestS = bestCandidate;
+    }
+
+    return bestS;
+
 }
 

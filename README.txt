@@ -16,6 +16,8 @@ make clean
 ./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --cw
 ./lop -i assets/instances/N-tiw56r72_250 --vnd --first --cw
 
+./lop -i assets/instances/N-tiw56r72_250 --iter --best --insert --cw
+
 
 
 *** Best known solutions:
