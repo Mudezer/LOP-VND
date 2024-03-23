@@ -5,4 +5,7 @@
 #ifndef LOP_VND_SKELETON_H
 #define LOP_VND_SKELETON_H
 
+#include "instance/instance.h"
+#include "config/configuration.h"
+
 #endif //LOP_VND_SKELETON_H

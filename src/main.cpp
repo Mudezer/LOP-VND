@@ -2,15 +2,16 @@
 // Created by Loïc Bermudez on 18/03/2024.
 //
 
-#include "skeleton/instance/instance.h"
+#include "skeleton/skeleton.h"
 #include "algorithms/algorithms.h"
+#include "algorithmType/algorithm_type.h"
 #include <chrono>
 
 
 void run(Instance &instance, Configuration &configuration);
 void runInstance(Instance &instance, Configuration &configuration);
-void runIterative(Instance &instance, Configuration &configuration);
-void runVND(Instance &instance, Configuration &configuration);
+vector<long int> setIterative(Instance &instance, Configuration &config);
+
 
 
 
@@ -30,6 +31,7 @@ int main(int argc, char **argv){
     //setting a random seed for all random operations
     cout << "Seed used to intialize RNG: " << instance.getSeed() << "\n";
     srand(instance.getSeed());
+
 
     // running the algorithm
     run(instance, config);
@@ -70,11 +72,12 @@ void run(Instance &instance, Configuration &configuration){
 
 void runInstance(Instance &instance, Configuration &configuration){
 
+    vector<long int> s;
     if(configuration.getAlgorithmType() == ITERATIVE){
-        runIterative(instance, configuration);
+        s = setIterative(instance, configuration);
     }
     else if(configuration.getAlgorithmType() == VND){
-        runVND(instance, configuration);
+//        runVND(instance, configuration);
     }
     else{
         cerr << "Algorithm type not recognized." << endl;
@@ -83,35 +86,20 @@ void runInstance(Instance &instance, Configuration &configuration){
 
 }
 
-void runIterative(Instance &instance, Configuration &configuration){
+vector<long int> setIterative(Instance &instance, Configuration &config){
 
-    vector<long int> s;
+    cout << "Running Iterative algorithm" << endl;
 
-    switch(configuration.getPivotAlgorithm()){
-        case FIRST:
-            cout << "First pivot algorithm" << endl;
-            s = firstImprovement(instance);
-            break;
-        case BEST:
-            cout << "Best pivot algorithm" << endl;
-            s = bestImprovement(instance, configuration);
-            break;
-        default:
-            cerr << "Pivot algorithm not recognized." << endl;
-            exit(1);
+    Iterative iterative;
+    iterative.configure(
+            config.computeInit,
+            config.computeNeighborhood,
+            config.computePivot
+            );
 
-    }
-
-
-
-
-
-
-
-
+    vector<long int> s = iterative.runIterative(instance);
+    return s;
 }
 
-void runVND(Instance &instance, Configuration &configuration){
 
 
-}

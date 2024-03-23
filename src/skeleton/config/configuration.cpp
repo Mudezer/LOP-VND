@@ -26,70 +26,84 @@ void Configuration::parseArguments(int argc, char **argv){
     }
 
 
-//    for(int i = 0; i < argc; i++){
-//        cout << argv[i] << endl;
-//    }
-
     if(!(((string)argv[3]).compare("--iter"))){
+        cout << "Running Iterative algorithm\n" << endl;
         algorithmType = ITERATIVE;
         setPivotAlgorithm(argv[4]);
         setNeighborhoodModification(argv[5]);
         setInitializationType(argv[6]);
-        char *FileName = argv[2];
         vndNeighborhood = NONE;
 
     }
     else if(!(((string)argv[3]).compare("--vnd"))){
+        cout << "Running VND algorithm\n" << endl;
         algorithmType = VND;
         pivotAlgorithm = FIRST;
         neighborhoodModification = NONE;
         initializationType = CW;
-        char *FileName = argv[2];
         setVNDNeighborhood(argv[4]);
 
 
 
     }
+    else{
+
+    }
 }
 
 void Configuration::setFileName(char *filename){
-    FileName = filename;
+    this->FileName = filename;
 }
 
 void Configuration::setPivotAlgorithm(char *pivot){
     if(!(((string)pivot).compare("--first"))){
-        pivotAlgorithm = FIRST;
+        cout << "First improvement selected\n" << endl;
+        this->pivotAlgorithm = FIRST;
+        this->computePivot = firstImprovement;
+
     }
     else if(!(((string)pivot).compare("--best"))){
-        pivotAlgorithm = BEST;
+        cout << "Best improvement selected\n" << endl;
+        this->pivotAlgorithm = BEST;
+        this->computePivot = bestImprovement;
     }
 }
 
-void Configuration::setNeighborhoodModification(char *operation){
-    if(!(((string)operation).compare("--transpose")))
-        neighborhoodModification = TRANSPOSE;
-
-    else if(!(((string)operation).compare("--exchange")))
-        neighborhoodModification = EXCHANGE;
-
-    else if (!(((string) operation).compare("--insert")))
-        neighborhoodModification = INSERT;
-
+void Configuration::setNeighborhoodModification(char *operation) {
+    if (!(((string) operation).compare("--transpose"))) {
+        cout << "Transpose selected\n" << endl;
+        this->neighborhoodModification = TRANSPOSE;
+        this->computeNeighborhood = transpose;
+    } else if (!(((string) operation).compare("--exchange"))) {
+        cout << "Exchange selected\n" << endl;
+        this->neighborhoodModification = EXCHANGE;
+        this->computeNeighborhood = exchange;
+    } else if (!(((string) operation).compare("--insert"))){
+        cout << "Insert selected\n" << endl;
+        this->neighborhoodModification = INSERT;
+        this->computeNeighborhood = insert;
+    }
 }
 
 void Configuration::setInitializationType(char *initialization){
-    if(!(((string)initialization).compare("--random")))
-        initializationType = RANDOM;
+    if(!(((string)initialization).compare("--random"))){
+        cout << "Random initialization selected\n" << endl;
+        this->initializationType = RANDOM;
+        this->computeInit = createRandomSolution;
+    }
 
-    else if(!(((string)initialization).compare("--cw")))
+    else if(!(((string)initialization).compare("--cw"))){
+        cout << "Cheneby x Watanabe heuristic initialization selected\n" << endl;
         initializationType = CW;
+        computeInit = createCWHeuristicSolution;
+    }
 }
 
 void Configuration::setVNDNeighborhood(char *vnd) {
-    if (!(((string) vnd).compare("TEI")))
+    if (!(((string) vnd).compare("--TEI")))
         vndNeighborhood = TRANS_EXCH_INS;
 
-    else if (!(((string) vnd).compare("TIE")))
+    else if (!(((string) vnd).compare("--TIE")))
         vndNeighborhood = TRANS_INS_EXCH;
 
 }

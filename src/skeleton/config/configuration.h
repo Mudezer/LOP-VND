@@ -6,12 +6,12 @@
 #define LOP_VND_CONFIGURATION_H
 
 //#include "../algorithms.h"
+#include "../../algorithmType/algorithm_type.h"
+#include "../../algorithms/algorithms.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
-
-
 
 /* algorithmType */
 #define ITERATIVE 1
@@ -48,6 +48,13 @@ private:
 public:
     Configuration();
     ~Configuration();
+
+    vector<long int> (*computeInit) (Instance&);
+    vector<long int> (*computePivot) (Instance&,
+                                        vector<long int>,
+                                        vector<long int> (*) (vector<long int>, int, int));
+    vector<long int> (*computeNeighborhood) (vector<long int>, int, int);
+
 
     //setters
     void parseArguments(int argc, char **argv);
