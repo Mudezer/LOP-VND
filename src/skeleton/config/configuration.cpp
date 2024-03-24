@@ -38,9 +38,11 @@ void Configuration::parseArguments(int argc, char **argv){
     else if(!(((string)argv[3]).compare("--vnd"))){
         cout << "Running VND algorithm\n" << endl;
         algorithmType = VND;
-        pivotAlgorithm = FIRST;
+        char pivotAlgo[] = "--first";
+        setPivotAlgorithm(pivotAlgo);
         neighborhoodModification = NONE;
-        initializationType = CW;
+        char init[] = "--cw";
+        setInitializationType(init);
         setVNDNeighborhood(argv[4]);
 
 
@@ -94,18 +96,26 @@ void Configuration::setInitializationType(char *initialization){
 
     else if(!(((string)initialization).compare("--cw"))){
         cout << "Cheneby x Watanabe heuristic initialization selected\n" << endl;
-        initializationType = CW;
-        computeInit = createCWHeuristicSolution;
+        this->initializationType = CW;
+        this->computeInit = createCWHeuristicSolution;
     }
 }
 
 void Configuration::setVNDNeighborhood(char *vnd) {
-    if (!(((string) vnd).compare("--TEI")))
-        vndNeighborhood = TRANS_EXCH_INS;
-
-    else if (!(((string) vnd).compare("--TIE")))
-        vndNeighborhood = TRANS_INS_EXCH;
-
+    if (!(((string) vnd).compare("--TEI"))) {
+        cout << "Transpose - Exchange - Insert VND sequence selected\n" << endl;
+        this->vndNeighborhood = TRANS_EXCH_INS;
+        this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), transpose);
+        this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), exchange);
+        this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), insert);
+    }
+    else if (!(((string) vnd).compare("--TIE"))) {
+        cout << "Transpose - Insert - Exchange VND sequence selected\n" << endl;
+        this->vndNeighborhood = TRANS_INS_EXCH;
+        this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), transpose);
+        this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), insert);
+        this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), exchange);
+    }
 }
 
 int Configuration::getAlgorithmType(){

@@ -10,7 +10,8 @@
 
 void run(Instance &instance, Configuration &configuration);
 void runInstance(Instance &instance, Configuration &configuration);
-vector<long int> setIterative(Instance &instance, Configuration &config);
+Iterative setIterative(Instance &instance, Configuration &config);
+VariableNeighbourDescent setVND(Instance &instance, Configuration &config);
 
 
 
@@ -74,19 +75,22 @@ void runInstance(Instance &instance, Configuration &configuration){
 
     vector<long int> s;
     if(configuration.getAlgorithmType() == ITERATIVE){
-        s = setIterative(instance, configuration);
+        Iterative iterative = setIterative(instance, configuration);
+        s = iterative.runIterative(instance);
     }
     else if(configuration.getAlgorithmType() == VND){
-//        runVND(instance, configuration);
+        VariableNeighbourDescent vnd = setVND(instance, configuration);
+        s = vnd.runVND(instance);
     }
     else{
         cerr << "Algorithm type not recognized." << endl;
         exit(1);
     }
 
+
 }
 
-vector<long int> setIterative(Instance &instance, Configuration &config){
+Iterative setIterative(Instance &instance, Configuration &config){
 
     cout << "Running Iterative algorithm" << endl;
 
@@ -97,8 +101,17 @@ vector<long int> setIterative(Instance &instance, Configuration &config){
             config.computePivot
             );
 
-    vector<long int> s = iterative.runIterative(instance);
-    return s;
+    return iterative;
+}
+
+VariableNeighbourDescent setVND(Instance &instance, Configuration &config){
+
+    cout << "Running VND algorithm" << endl;
+    VariableNeighbourDescent vnd;
+    vnd.configure(config.computeInit,
+                  config.computePivot,
+                  config.computeVNDNeighborhoods);
+    return vnd;
 }
 
 

@@ -15,7 +15,7 @@ private:
     // first compute the initial solution (either random or CW)
     vector<long int> (*computeInitialSolution)(Instance&);
     // second consider the neighbour modification
-    vector<long int> (*neighbourModif)(vector<long int>, int, int);
+    vector<long int> (*neighbourOperation)(vector<long int>, int, int);
     // third consider the pivot algorithm
     vector<long int> (*pivotImprove)(Instance&,
                                         vector<long int>,
@@ -23,7 +23,7 @@ private:
 public:
     void configure(
             vector<long int> (*computeInitialSolution) (Instance&),
-            vector<long int> (*neighbourModif) (vector<long int>, int ,int),
+            vector<long int> (*neighbourOperation) (vector<long int>, int ,int),
             vector<long int> (*pivotImprove) (Instance&, vector<long int>,
                                                     vector<long int> (*) (vector<long int>, int, int))
     );

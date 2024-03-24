@@ -13,6 +13,7 @@ all: skeleton init pivots operations algorithms
 		bin/configuration.o \
 		bin/instance.o \
 		bin/iterative.o \
+		bin/vnd.o \
 		bin/main.o \
 		-o lop
 
@@ -31,7 +32,7 @@ operations:
 
 algorithms:
 	$(cc) $(CFLAGS) -c src/algorithmType/iterative/iterative.cpp -o bin/iterative.o
-	#$(cc) $(CFLAGS) -c src/algorithmType/vnd/vnd.cpp -o bin/vnd.o
+	$(cc) $(CFLAGS) -c src/algorithmType/vnd/vnd.cpp -o bin/vnd.o
 
 
 skeleton:

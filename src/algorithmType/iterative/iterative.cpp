@@ -7,13 +7,13 @@
 
 void Iterative::configure(
         vector<long int> (*computeInitialSolution)(Instance&),
-        vector<long int> (*neighbourModif)(vector<long int>, int, int),
+        vector<long int> (*neighbourOperation)(vector<long int>, int, int),
         vector<long int> (*pivotImprove)(Instance&,
                                              vector<long int>,
                                              vector<long int> (*) (vector<long int>, int, int))
         ){
     this->computeInitialSolution = computeInitialSolution;
-    this->neighbourModif = neighbourModif;
+    this->neighbourOperation = neighbourOperation;
     this->pivotImprove = pivotImprove;
 }
 
@@ -24,7 +24,7 @@ vector<long int> Iterative::runIterative(Instance &instance, vector<long int> s)
 
     while(improvement){
         improvement = false;
-        improved = pivotImprove(instance, bestS, neighbourModif);
+        improved = pivotImprove(instance, bestS, neighbourOperation);
         if(!(bestS == improved)){
             bestS = improved;
             improvement = true;

@@ -54,6 +54,7 @@ public:
                                         vector<long int>,
                                         vector<long int> (*) (vector<long int>, int, int));
     vector<long int> (*computeNeighborhood) (vector<long int>, int, int);
+    vector<vector<long int> (*) (vector<long int>, int, int)> computeVNDNeighborhoods;
 
 
     //setters

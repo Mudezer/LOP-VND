@@ -26,6 +26,8 @@ vector<long int> bestImprovement(Instance &instance, vector<long int> s,
 vector<long int> exchange(vector<long int> s, int i, int j);
 vector<long int> insert(vector<long int> s, int i, int j);
 vector<long int> transpose(vector<long int> s, int i, int j);
+vector<long int> TIE(vector<long int> s, int i, int j);
+vector<long int> TEI(vector<long int> s, int i, int j);
 
 /* constants for a pseudo-random number generator, taken from
    Numerical Recipes in C book --- never trust the standard C random

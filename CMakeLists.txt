@@ -16,4 +16,5 @@ add_executable(LOP_VND src/main.cpp
         src/algorithms/solution/solution.cpp
         src/algorithmType/iterative/iterative.cpp
         src/skeleton/utilities/utilities.cpp
+        src/algorithmType/vnd/vnd.cpp
 )
