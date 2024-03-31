@@ -17,6 +17,10 @@ long int Instance::getSeed(){
     return Seed;
 }
 
+vector<vector<long int>> Instance::getCostMat(){
+    return CostMat;
+}
+
 void Instance::allocateMatrix(){
     // resize the columns length
     CostMat.resize(PSize);
@@ -33,7 +37,7 @@ long long int Instance::computeCost(vector<long> &s) {
     int h, k;
     long long int sum = 0;
 
-    for(sum=0,h=0; h<PSize;h++)
+    for(h=0; h<PSize;h++)
     for(k=h+1; k<PSize; k++)
         sum += CostMat[s[h]][s[k]];
     return (sum);

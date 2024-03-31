@@ -8,9 +8,11 @@
 //#include "../algorithms.h"
 #include "../../algorithmType/algorithm_type.h"
 #include "../../algorithms/algorithms.h"
+#include "../utilities/utilities.h"
 #include <iostream>
 #include <string>
 
+typedef vector<vector<long int>> Matrix;
 using namespace std;
 
 /* algorithmType */
@@ -52,14 +54,19 @@ public:
     vector<long int> (*computeInit) (Instance&);
     vector<long int> (*computePivot) (Instance&,
                                         vector<long int>,
-                                        vector<long int> (*) (vector<long int>, int, int));
+                                        vector<long int> (*) (vector<long int>, int, int),
+                                        long long int (*) (Matrix, vector<long int>, int, int));
     vector<long int> (*computeNeighborhood) (vector<long int>, int, int);
+    long long int (*computeDelta) (Matrix, vector<long int>, int, int);
     vector<vector<long int> (*) (vector<long int>, int, int)> computeVNDNeighborhoods;
+    vector<long long int (*) (Matrix, vector<long int>, int, int)> computeDeltas;
+
 
 
     //setters
     void parseArguments(int argc, char **argv);
     void setPivotAlgorithm(char *pivot);
+    void setPivotAlgorithmVND();
     void setNeighborhoodModification(char *operation);
     void setInitializationType(char *initialization);
     void setVNDNeighborhood(char *vnd);
@@ -75,6 +82,7 @@ public:
     int getVNDNeighborhood();
     int getInitializationType();
     char *getFileName();
+
 
 };
 

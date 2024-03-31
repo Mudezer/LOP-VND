@@ -10,6 +10,7 @@
 #include <string>
 #include "../skeleton/skeleton.h"
 #include "solution/solution.h"
+typedef vector<vector<long int>> Matrix;
 
 
 /*  Initialisation */
@@ -17,10 +18,14 @@ vector<long int> createRandomSolution(Instance &instance);
 vector<long int> createCWHeuristicSolution(Instance &instance);
 
 /* Pivot */
-vector<long int> firstImprovement(Instance &instance, vector<long int> s,
-                                  vector<long int> (*computeModification) (vector<long int>, int, int));
-vector<long int> bestImprovement(Instance &instance, vector<long int> s,
-                                 vector<long int> (*computeModification) (vector<long int>, int, int));
+vector<long int> firstImprovement(Instance &instance,
+                                  vector<long int> s,
+                                  vector<long int> (*computeModification) (vector<long int>, int, int),
+                                  long long int (*computeDelta) (Matrix, vector<long int>, int, int));
+vector<long int> bestImprovement(Instance &instance,
+                                 vector<long int> s,
+                                 vector<long int> (*computeModification) (vector<long int>, int, int),
+                                 long long int (*computeDelta) (Matrix, vector<long int>, int, int));
 
 /* Operations */
 vector<long int> exchange(vector<long int> s, int i, int j);

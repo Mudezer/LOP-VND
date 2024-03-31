@@ -26,6 +26,7 @@ class Instance{
 
         long int getSeed();
 
+        vector<vector<long int>> getCostMat();
         void allocateMatrix();
 
         void readInstance(const char *filename);

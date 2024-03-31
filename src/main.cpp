@@ -98,7 +98,9 @@ Iterative setIterative(Instance &instance, Configuration &config){
     iterative.configure(
             config.computeInit,
             config.computeNeighborhood,
+            config.computeDelta,
             config.computePivot
+
             );
 
     return iterative;
@@ -110,7 +112,9 @@ VariableNeighbourDescent setVND(Instance &instance, Configuration &config){
     VariableNeighbourDescent vnd;
     vnd.configure(config.computeInit,
                   config.computePivot,
-                  config.computeVNDNeighborhoods);
+                  config.computeVNDNeighborhoods,
+                  config.computeDeltas
+                  );
     return vnd;
 }
 

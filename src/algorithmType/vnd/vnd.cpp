@@ -8,12 +8,15 @@ void VariableNeighbourDescent::configure(
         vector<long int> (*computeInitialSolution)(Instance&),
         vector<long int> (*pivotImprove)(Instance&,
                                          vector<long int>,
-                                         vector<long int> (*) (vector<long int>, int, int)),
-        vector<vector<long int> (*) (vector<long int>, int, int)> neighbourOperations
+                                         vector<long int> (*) (vector<long int>, int, int),
+                                         long long int (*) (Matrix, vector<long int>, int, int)),
+        vector<vector<long int> (*) (vector<long int>, int, int)> neighbourOperations,
+        vector<long long int (*) (Matrix, vector<long int>, int, int)> computeDeltas
         ){
     this->computeInitialSolution = computeInitialSolution;
     this->pivotImprove = pivotImprove;
     this->neighbourOperations = neighbourOperations;
+    this->computeDeltas = computeDeltas;
 }
 
 vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
@@ -32,7 +35,7 @@ vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
 
 
     while(i < k){
-        vector<long int> candidateS = pivotImprove(instance, bestS, neighbourOperations[i]);
+        vector<long int> candidateS = pivotImprove(instance, bestS, neighbourOperations[i], computeDeltas[i]);
         if(bestS == candidateS) {
             i++;
         }else{

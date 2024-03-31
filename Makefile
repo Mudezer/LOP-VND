@@ -2,7 +2,7 @@ cc = g++
 CFLAGS = -std=c++17 -O3 -Wall
 
 all: skeleton init pivots operations algorithms
-	$(cc) $(CFLAGS) \
+	$(cc) $(CFLAGS)  -v \
 		bin/CW_heuristic.o \
 		bin/random_permutation.o \
 		bin/best_improvement.o \
@@ -14,6 +14,7 @@ all: skeleton init pivots operations algorithms
 		bin/instance.o \
 		bin/iterative.o \
 		bin/vnd.o \
+		bin/utilities.o \
 		bin/main.o \
 		-o lop
 
@@ -38,7 +39,32 @@ algorithms:
 skeleton:
 	$(cc) $(CFLAGS) -c src/skeleton/config/configuration.cpp -o bin/configuration.o
 	$(cc) $(CFLAGS) -c src/skeleton/instance/instance.cpp -o bin/instance.o
+	$(cc) $(CFLAGS) -c src/skeleton/utilities/utilities.cpp -o bin/utilities.o
 	$(cc) $(CFLAGS) -c src/main.cpp -o bin/main.o
 
+
+
+test_first:
+	#./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --random
+	./lop -i assets/instances/N-tiw56r72_250 --iter --first --insert --random
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --first --exchange --random
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --cw
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --first --insert --cw
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --first --exchange --cw
+
+test_best:
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --best --transpose --random
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --best --insert --random
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --best --exchange --random
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --best --transpose --cw
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --best --insert --cw
+#	./lop -i assets/instances/N-tiw56r72_250 --iter --best --exchange --cw
+
+test_vnd:
+	./lop -i assets/instances/N-tiw56r72_250 --vnd --TIE
+	./lop -i assets/instances/N-tiw56r72_250 --vnd --TEI
+
+mourir:
+	$(cc) $(CFLAGS) -o mourir mourir.cpp
 clean:
-	rm -f src/*~ bin/*.o lop
+	rm -f src/*~ bin/*.o lop mourir

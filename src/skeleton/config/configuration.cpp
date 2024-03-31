@@ -4,12 +4,13 @@
 
 #include "configuration.h"
 
+
 Configuration::Configuration(){}
 
 Configuration::~Configuration(){}
 
 void Configuration::parseArguments(int argc, char **argv){
-    if(argc < 4){
+    if(argc < 3){
         cerr << "Incorrect number of arguments." << endl;
 //        cerr << "Usage: ./lop -i <instance_name> --<algo_type> --<pivot_algorithm> --<neighborhood_modification> --<initialisation_type>  \n" << endl;
         cerr << "Usage : ./lop -i <instance_name> --<algo_type>  [--options] " << endl;
@@ -29,32 +30,39 @@ void Configuration::parseArguments(int argc, char **argv){
     if(!(((string)argv[3]).compare("--iter"))){
         cout << "Running Iterative algorithm\n" << endl;
         algorithmType = ITERATIVE;
-        setPivotAlgorithm(argv[4]);
+
         setNeighborhoodModification(argv[5]);
         setInitializationType(argv[6]);
         vndNeighborhood = NONE;
+        setPivotAlgorithm(argv[4]);
 
     }
     else if(!(((string)argv[3]).compare("--vnd"))){
         cout << "Running VND algorithm\n" << endl;
         algorithmType = VND;
-        char pivotAlgo[] = "--first";
-        setPivotAlgorithm(pivotAlgo);
+
         neighborhoodModification = NONE;
         char init[] = "--cw";
         setInitializationType(init);
         setVNDNeighborhood(argv[4]);
+        setPivotAlgorithmVND();
 
 
 
     }
-    else{
+    else if(!(((string)argv[3]).compare("--all"))){
 
     }
 }
 
 void Configuration::setFileName(char *filename){
     this->FileName = filename;
+}
+
+void Configuration::setPivotAlgorithmVND() {
+    this->pivotAlgorithm = FIRST;
+    this->computePivot = firstImprovement;
+
 }
 
 void Configuration::setPivotAlgorithm(char *pivot){
@@ -76,14 +84,19 @@ void Configuration::setNeighborhoodModification(char *operation) {
         cout << "Transpose selected\n" << endl;
         this->neighborhoodModification = TRANSPOSE;
         this->computeNeighborhood = transpose;
+        this->computeDelta = computeDeltaTranspose;
+
     } else if (!(((string) operation).compare("--exchange"))) {
         cout << "Exchange selected\n" << endl;
         this->neighborhoodModification = EXCHANGE;
         this->computeNeighborhood = exchange;
+        this->computeDelta = computeDeltaExchange;
+
     } else if (!(((string) operation).compare("--insert"))){
         cout << "Insert selected\n" << endl;
         this->neighborhoodModification = INSERT;
         this->computeNeighborhood = insert;
+        this->computeDelta = computeDeltaInsert;
     }
 }
 
@@ -105,16 +118,29 @@ void Configuration::setVNDNeighborhood(char *vnd) {
     if (!(((string) vnd).compare("--TEI"))) {
         cout << "Transpose - Exchange - Insert VND sequence selected\n" << endl;
         this->vndNeighborhood = TRANS_EXCH_INS;
+
         this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), transpose);
+        this->computeDeltas.insert(computeDeltas.end(), computeDeltaTranspose);
+
         this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), exchange);
+        this->computeDeltas.insert(computeDeltas.end(), computeDeltaExchange);
+
         this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), insert);
+        this->computeDeltas.insert(computeDeltas.end(), computeDeltaInsert);
+
     }
     else if (!(((string) vnd).compare("--TIE"))) {
         cout << "Transpose - Insert - Exchange VND sequence selected\n" << endl;
         this->vndNeighborhood = TRANS_INS_EXCH;
+
         this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), transpose);
+        this->computeDeltas.insert(computeDeltas.end(), computeDeltaTranspose);
+
         this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), insert);
+        this->computeDeltas.insert(computeDeltas.end(), computeDeltaInsert);
+
         this->computeVNDNeighborhoods.insert(computeVNDNeighborhoods.end(), exchange);
+        this->computeDeltas.insert(computeDeltas.end(), computeDeltaExchange);
     }
 }
 
@@ -141,3 +167,5 @@ int Configuration::getInitializationType(){
 char *Configuration::getFileName(){
     return FileName;
 }
+
+

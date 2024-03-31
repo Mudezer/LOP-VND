@@ -6,6 +6,7 @@
 #define LOP_VND_ITERATIVE_H
 
 #include "../../skeleton/skeleton.h"
+typedef vector<vector<long int>> Matrix;
 
 
 
@@ -19,13 +20,18 @@ private:
     // third consider the pivot algorithm
     vector<long int> (*pivotImprove)(Instance&,
                                         vector<long int>,
-                                        vector<long int> (*) (vector<long int>, int, int));
+                                        vector<long int> (*) (vector<long int>, int, int),
+                                        long long int (*) (Matrix, vector<long int>, int, int));
+    long long int (*computeDelta) (Matrix, vector<long int>, int, int);
 public:
     void configure(
             vector<long int> (*computeInitialSolution) (Instance&),
             vector<long int> (*neighbourOperation) (vector<long int>, int ,int),
+            long long int (*computeDelta) (Matrix, vector<long int>, int, int),
             vector<long int> (*pivotImprove) (Instance&, vector<long int>,
-                                                    vector<long int> (*) (vector<long int>, int, int))
+                                                    vector<long int> (*) (vector<long int>, int, int),
+                                                    long long int (*) (Matrix, vector<long int>, int, int))
+
     );
     vector<long int> runIterative(Instance &instance, vector<long int> s);
     vector<long int> runIterative(Instance &instance);
