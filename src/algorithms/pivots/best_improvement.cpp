@@ -16,9 +16,6 @@ vector<long int> bestImprovement(Instance &instance,
     long long int actualCost;
     int k=0,l=0;
 
-    cout << "improvement in " << endl;
-    cout << "S.size: " << s.size() << endl;
-
     for(int i=0;i<s.size(); i++){
         for(int j=i+1; j<s.size(); j++){
 //            vector<long int> candidateS = computeModification(bestS, i,j);
@@ -28,9 +25,6 @@ vector<long int> bestImprovement(Instance &instance,
             }
         }
     }
-
-    cout << "improvement out " << endl;
-    cout << "l: " << l << " k: " << k << endl;
     bestS = computeModification(bestS, l, k);
 
 

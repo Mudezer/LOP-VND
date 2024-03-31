@@ -2,7 +2,7 @@ cc = g++
 CFLAGS = -std=c++17 -O3 -Wall
 
 all: skeleton init pivots operations algorithms
-	$(cc) $(CFLAGS)  -v \
+	$(cc) $(CFLAGS)   \
 		bin/CW_heuristic.o \
 		bin/random_permutation.o \
 		bin/best_improvement.o \

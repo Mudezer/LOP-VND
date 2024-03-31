@@ -25,7 +25,6 @@ vector<long int> Iterative::runIterative(Instance &instance, vector<long int> s)
     vector<long int> bestS = s;
     vector<long int> improved;
     bool improvement = true;
-    cout << "iterative in" << endl;
 
     while(improvement){
         improvement = false;
