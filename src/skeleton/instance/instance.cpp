@@ -54,15 +54,19 @@ long long int Instance::computeAttractiveness(long step, long row) {
 }
 
 
-void Instance::readInstance(const char *filename){
+void Instance::readInstance(const string filename){
 
     ifstream file;
     long int i, j;
     string str;
     long int val;
 
+    filesystem::path p = filename;
+    this->InstanceName = p.filename();
+
+
     file.open(filename);
-    cout << "Reading instance file: " << filename << endl;
+    cout << "Reading instance file: " << p.filename() << endl;
 
     if(!file.is_open()){
         perror("readInstance");
@@ -92,6 +96,10 @@ void Instance::readInstance(const char *filename){
     cout << "Seed used to initialize RNG: " << Seed << endl;
 
 
+}
+
+string Instance::getInstanceName() {
+    return InstanceName;
 }
 
 

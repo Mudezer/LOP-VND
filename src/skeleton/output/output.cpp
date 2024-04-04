@@ -8,47 +8,86 @@ Output::Output(){}
 
 Output::~Output(){}
 
-void Output::setInstanceName(char *instanceName) {
-    this->instanceName = instanceName;
-}
-
-void Output::setBestKnown(long long int bestKnown) {
-    this->bestKnown = bestKnown;
-}
-
-void Output::setBestCost(long long int bestCost) {
+void Output::setUp(string instanceNamed,
+                   string algoClass,
+                   string configuration,
+                   long long int bestCost,
+                   double elapsedTime) {
+    this->instanceName = instanceNamed;
+    this->algoClass = algoClass;
+    this->configuration = configuration;
     this->bestCost = bestCost;
-}
-
-void Output::setElapsedTime(double elapsedTime) {
     this->elapsedTime = elapsedTime;
+
+    findBestKnown(instanceNamed);
 }
 
-void Output::setRelativeDeviation(long long int relative_deviation) {
-    this->relative_deviation = relative_deviation;
+vector<string> Output::split(const string &s, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
 }
 
-char *Output::getInstanceName() {
-    return this->instanceName;
+
+void Output::findBestKnown(string instance_name){
+
+    string path_to_bestKnowns = "assets/best_known/best_known.txt";
+
+    ifstream file(path_to_bestKnowns);
+
+    if(file.is_open()){
+        string line;
+        while(getline(file, line)){
+            std::size_t found = line.find(instance_name);
+            if (found != string::npos) {
+                string afterKeyword = line.substr(found);
+                vector<string> splitResults = split(afterKeyword, ' ');
+                for (int i = 1; i < splitResults.size(); i++) {
+                    if (!splitResults[i].empty()) {
+                        this->bestKnown = splitResults[i];
+                        break;
+                    }
+                }
+                if (!bestKnown.empty()) {
+                    break;
+                }
+            }
+        }
+    }
+    else{
+        this->bestCost = -1; // -1 means that the best known is not available
+    }
+
 }
 
-long long int Output::getBestKnown() {
-    return this->bestKnown;
-}
+void Output::printOutput(){
 
-long long int Output::getBestCost() {
-    return this->bestCost;
-}
+    cout << "Instance name: " << this->instanceName << endl;
+    cout << "Algorithm class: " << this->algoClass << endl;
+    cout << "Configuration: " << this->configuration << endl;
+    cout << "Best known: " << this->bestKnown << endl;
+    cout << "Best cost: " << this->bestCost << endl;
+    cout << "Elapsed time: " << this->elapsedTime << endl;
 
-double Output::getElapsedTime() {
-    return this->elapsedTime;
-}
+    string path_to_output = "results/" + this->algoClass + "/" + "res_"+ this->algoClass + ".csv";
+    cout << "Output file: " << path_to_output << endl;
 
-long long int Output::getRelativeDeviation() {
-    return this->relative_deviation;
-}
+//ios::out | ios::app
+    ofstream file;
+    file.open(path_to_output, ios::app);
 
-void Output::writeOutput(){
+    if(!file){
+        cerr << "File could not be opened for writing." << endl;
+    }
+
+
+    file << this->instanceName << "," << this->configuration << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << endl;
+
+    file.close();
 
 
 }

@@ -11,6 +11,7 @@
 #include "../utilities/utilities.h"
 #include <iostream>
 #include <string>
+#include <getopt.h>
 
 typedef vector<vector<long int>> Matrix;
 using namespace std;
@@ -40,12 +41,19 @@ using namespace std;
 
 class Configuration{
 private:
+    string FileName;
+    string algoClass;
+    string configuration;
+
+    // all flag
+    bool all;
+    string all_algo;
+
     int algorithmType;
     int pivotAlgorithm;
     int neighborhoodModification;
     int vndNeighborhood;
     int initializationType;
-    char *FileName;
 
 public:
     Configuration();
@@ -54,34 +62,34 @@ public:
     vector<long int> (*computeInit) (Instance&);
     vector<long int> (*computePivot) (Instance&,
                                         vector<long int>,
-                                        vector<long int> (*) (vector<long int>, int, int),
-                                        long long int (*) (Matrix, vector<long int>, int, int));
-    vector<long int> (*computeNeighborhood) (vector<long int>, int, int);
-    long long int (*computeDelta) (Matrix, vector<long int>, int, int);
-    vector<vector<long int> (*) (vector<long int>, int, int)> computeVNDNeighborhoods;
-    vector<long long int (*) (Matrix, vector<long int>, int, int)> computeDeltas;
-
+                                        vector<long int> (*) (vector<long int>&, int, int),
+                                        long long int (*) (Matrix&, vector<long int>&, int, int));
+    vector<long int> (*computeNeighborhood) (vector<long int>&, int, int);
+    long long int (*computeDelta) (Matrix&, vector<long int>&, int, int);
+    vector<vector<long int> (*) (vector<long int>&, int, int)> computeNeighborhoods;
+    vector<long long int (*) (Matrix&, vector<long int>&, int, int)> computeDeltas;
+    vector<vector<long int> (*) (Instance&)> computeInitializations;
+    vector<vector<long int> (*) (Instance&,
+                                vector<long int>,
+                                vector<long int> (*) (vector<long int>&, int, int),
+                                long long int (*) (Matrix&, vector<long int>&, int, int))> computePivots;
 
 
     //setters
     void parseArguments(int argc, char **argv);
-    void setPivotAlgorithm(char *pivot);
-    void setPivotAlgorithmVND();
-    void setNeighborhoodModification(char *operation);
-    void setInitializationType(char *initialization);
-    void setVNDNeighborhood(char *vnd);
-    void setFileName(char *filename);
-
-
-
 
     //getters
     int getAlgorithmType();
-    int getPivotAlgorithm();
-    int getNeighborhoodModification();
-    int getVNDNeighborhood();
-    int getInitializationType();
-    char *getFileName();
+    string getFileName();
+
+    // running all kind of algorithm type
+    bool isAll();
+    string getAllAlgo();
+//    void setAllIterative();
+//    void setAllVND();
+
+    string getAlgoClass();
+    string getConfiguration();
 
 
 };

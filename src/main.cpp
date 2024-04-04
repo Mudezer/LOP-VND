@@ -3,17 +3,16 @@
 //
 
 #include "skeleton/skeleton.h"
+//#include "skeleton/output/output.h"
 #include "algorithms/algorithms.h"
 #include "algorithmType/algorithm_type.h"
 #include <chrono>
 
 
 void run(Instance &instance, Configuration &configuration);
-void runInstance(Instance &instance, Configuration &configuration);
+vector<long int> runInstance(Instance &instance, Configuration &configuration);
 Iterative setIterative(Instance &instance, Configuration &config);
 VariableNeighbourDescent setVND(Instance &instance, Configuration &config);
-
-
 
 
 int main(int argc, char **argv){
@@ -41,6 +40,8 @@ int main(int argc, char **argv){
 
 void run(Instance &instance, Configuration &configuration){
 
+    vector<long int> finalSolution;
+    double time = 0.0;
 
     switch(configuration.getAlgorithmType()) {
         case ITERATIVE:
@@ -49,18 +50,16 @@ void run(Instance &instance, Configuration &configuration){
 
             auto start = std::chrono::high_resolution_clock::now();
 
-            runInstance(instance, configuration);
+            finalSolution = runInstance(instance, configuration);
 
             auto stop = std::chrono::high_resolution_clock::now();
 
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-            double time = ((double) duration.count()) / 1000000.0;
+            time = ((double) duration.count()) / 1000000.0;
 
             cout << "Time taken: " << time << setprecision(9) << "s\n" << endl;
 
-//            // compute the number of element in the solution
-//            cout << "Number of elements in the solution: " << s.size() << endl;
             }
             break;
         default:
@@ -69,18 +68,29 @@ void run(Instance &instance, Configuration &configuration){
             break;
     }
 
+    Output output;
+    output.setUp(instance.getInstanceName(),
+                  configuration.getAlgoClass(),
+                  configuration.getConfiguration(),
+                  instance.computeCost(finalSolution),
+                  time);
+
+    output.printOutput();
+
+
+
 }
 
-void runInstance(Instance &instance, Configuration &configuration){
+vector<long int> runInstance(Instance &instance, Configuration &configuration){
 
     vector<long int> s;
     if(configuration.getAlgorithmType() == ITERATIVE){
         Iterative iterative = setIterative(instance, configuration);
-        s = iterative.runIterative(instance);
+        return s = iterative.runIterative(instance);
     }
     else if(configuration.getAlgorithmType() == VND){
         VariableNeighbourDescent vnd = setVND(instance, configuration);
-        s = vnd.runVND(instance);
+        return s = vnd.runVND(instance);
     }
     else{
         cerr << "Algorithm type not recognized." << endl;
@@ -112,7 +122,7 @@ VariableNeighbourDescent setVND(Instance &instance, Configuration &config){
     VariableNeighbourDescent vnd;
     vnd.configure(config.computeInit,
                   config.computePivot,
-                  config.computeVNDNeighborhoods,
+                  config.computeNeighborhoods,
                   config.computeDeltas
                   );
     return vnd;

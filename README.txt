@@ -14,7 +14,12 @@ make clean
 ./lop -i assets/instances/N-tiw56r72_250
 
 ./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --cw
+./lop -i assets/instances/N-be75eec_250 --iter --first --insert --cw
 ./lop -i assets/instances/N-tiw56r72_250 --vnd --first
+
+
+./lop -i assets/instances/N-be75eec_150 --iter --first --transpose --cw
+
 
 ./lop -i assets/instances/N-tiw56r72_250 --iter --best --insert --cw
 

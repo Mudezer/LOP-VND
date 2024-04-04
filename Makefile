@@ -15,6 +15,7 @@ all: skeleton init pivots operations algorithms
 		bin/iterative.o \
 		bin/vnd.o \
 		bin/utilities.o \
+		bin/output.o \
 		bin/main.o \
 		-o lop
 
@@ -40,6 +41,7 @@ skeleton:
 	$(cc) $(CFLAGS) -c src/skeleton/config/configuration.cpp -o bin/configuration.o
 	$(cc) $(CFLAGS) -c src/skeleton/instance/instance.cpp -o bin/instance.o
 	$(cc) $(CFLAGS) -c src/skeleton/utilities/utilities.cpp -o bin/utilities.o
+	$(cc) $(CFLAGS) -c src/skeleton/output/output.cpp -o bin/output.o
 	$(cc) $(CFLAGS) -c src/main.cpp -o bin/main.o
 
 
@@ -65,6 +67,7 @@ test_vnd:
 	./lop -i assets/instances/N-tiw56r72_250 --vnd --TEI
 
 mourir:
-	$(cc) $(CFLAGS) -o mourir mourir.cpp
+	$(cc) $(CFLAGS) -o mourir test/mourir.cpp
+	$(cc) $(CFLAGS) -o outest test/outest.cpp
 clean:
 	rm -f src/*~ bin/*.o lop mourir

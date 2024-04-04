@@ -13,21 +13,21 @@ private:
     vector<long int> (*computeInitialSolution)(Instance&);
     vector<long int> (*pivotImprove)(Instance&,
                                  vector<long int>,
-                                 vector<long int> (*) (vector<long int>, int, int),
-                                 long long int (*) (Matrix, vector<long int>, int, int));
+                                 vector<long int> (*) (vector<long int>&, int, int),
+                                 long long int (*) (Matrix&, vector<long int>&, int, int));
     // we create a vector of function pointers => we need 3 methods to be used in the VND
-    vector<vector<long int> (*) (vector<long int>, int, int)> neighbourOperations;
-    vector<long long int (*) (Matrix, vector<long int>, int, int)> computeDeltas;
+    vector<vector<long int> (*) (vector<long int>&, int, int)> neighbourOperations;
+    vector<long long int (*) (Matrix&, vector<long int>&, int, int)> computeDeltas;
 
 
 public:
     void configure(
             vector<long int> (*computeInitialSolution) (Instance&),
             vector<long int> (*pivotImprove) (Instance&, vector<long int>,
-                                                    vector<long int> (*) (vector<long int>, int, int),
-                                                    long long int (*) (Matrix, vector<long int>, int, int)),
-            vector<vector<long int> (*) (vector<long int>, int, int)> neighbourOperations,
-            vector<long long int (*) (Matrix, vector<long int>, int, int)> computeDeltas
+                                                    vector<long int> (*) (vector<long int>&, int, int),
+                                                    long long int (*) (Matrix&, vector<long int>&, int, int)),
+            vector<vector<long int> (*) (vector<long int>&, int, int)> neighbourOperations,
+            vector<long long int (*) (Matrix&, vector<long int>&, int, int)> computeDeltas
     );
 //    vector<long int> runVND(Instance &instance, vector<long int> s);
     vector<long int> runVND(Instance &instance);

@@ -8,6 +8,7 @@
 #include "instance/instance.h"
 #include "config/configuration.h"
 //#include "utilities/utilities.h"
+#include "output/output.h"
 
 
 #endif //LOP_VND_SKELETON_H

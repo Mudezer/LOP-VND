@@ -5,7 +5,7 @@
 
 #include "../algorithms.h"
 
-vector<long int> insert(vector<long int> s, int i, int j){
+vector<long int> insert(vector<long int> &s, int i, int j){
 
     long int temp = s[i];
     s.erase(s.begin()+i);

@@ -10,18 +10,18 @@
 using namespace std;
 typedef vector<vector<long int>> Matrix;
 
-long long int computeDeltaInsert(Matrix CostMat,
-                                 vector<long int> s,
+long long int computeDeltaInsert(Matrix &CostMat,
+                                 vector<long int> &s,
                                  int i,
                                  int j);
 
-long long int computeDeltaTranspose(Matrix CostMat,
-                                    vector<long int> s,
+long long int computeDeltaTranspose(Matrix &CostMat,
+                                    vector<long int> &s,
                                     int i,
                                     int j);
 
-long long int computeDeltaExchange(Matrix CostMat,
-                                   vector<long int> s,
+long long int computeDeltaExchange(Matrix &CostMat,
+                                   vector<long int> &s,
                                    int i,
                                    int j);
 

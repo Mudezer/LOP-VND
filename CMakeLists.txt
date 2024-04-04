@@ -18,5 +18,6 @@ add_executable(LOP_VND src/main.cpp
         src/skeleton/utilities/utilities.cpp
         src/algorithmType/vnd/vnd.cpp
         src/skeleton/output/output.cpp
-        mourir.cpp
+        test/mourir.cpp
+        test/outest.cpp
 )

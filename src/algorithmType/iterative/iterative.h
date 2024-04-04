@@ -16,21 +16,21 @@ private:
     // first compute the initial solution (either random or CW)
     vector<long int> (*computeInitialSolution)(Instance&);
     // second consider the neighbour modification
-    vector<long int> (*neighbourOperation)(vector<long int>, int, int);
+    vector<long int> (*neighbourOperation)(vector<long int>&, int, int);
     // third consider the pivot algorithm
     vector<long int> (*pivotImprove)(Instance&,
                                         vector<long int>,
-                                        vector<long int> (*) (vector<long int>, int, int),
-                                        long long int (*) (Matrix, vector<long int>, int, int));
-    long long int (*computeDelta) (Matrix, vector<long int>, int, int);
+                                        vector<long int> (*) (vector<long int>&, int, int),
+                                        long long int (*) (Matrix&, vector<long int>&, int, int));
+    long long int (*computeDelta) (Matrix&, vector<long int>&, int, int);
 public:
     void configure(
             vector<long int> (*computeInitialSolution) (Instance&),
-            vector<long int> (*neighbourOperation) (vector<long int>, int ,int),
-            long long int (*computeDelta) (Matrix, vector<long int>, int, int),
+            vector<long int> (*neighbourOperation) (vector<long int>&, int ,int),
+            long long int (*computeDelta) (Matrix&, vector<long int>&, int, int),
             vector<long int> (*pivotImprove) (Instance&, vector<long int>,
-                                                    vector<long int> (*) (vector<long int>, int, int),
-                                                    long long int (*) (Matrix, vector<long int>, int, int))
+                                                    vector<long int> (*) (vector<long int>&, int, int),
+                                                    long long int (*) (Matrix&, vector<long int>&, int, int))
 
     );
     vector<long int> runIterative(Instance &instance, vector<long int> s);

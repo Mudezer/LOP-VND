@@ -6,7 +6,7 @@
 
 
 
-long long int computeDeltaInsert(Matrix CostMat, vector<long int> s, int i, int j){
+long long int computeDeltaInsert(Matrix &CostMat, vector<long int> &s, int i, int j){
     long long int delta = 0;
     long int k;
     if(i<j){
@@ -22,7 +22,7 @@ long long int computeDeltaInsert(Matrix CostMat, vector<long int> s, int i, int 
     return delta;
 }
 
-long long int computeDeltaTranspose(Matrix CostMat, vector<long int> s, int i, int j) {
+long long int computeDeltaTranspose(Matrix &CostMat, vector<long int> &s, int i, int j) {
     long long int delta = 0;
 
     // i is always smaller than j as we transpose i and i+1
@@ -33,7 +33,7 @@ long long int computeDeltaTranspose(Matrix CostMat, vector<long int> s, int i, i
 
 }
 
-long long int computeDeltaExchange(Matrix CostMat, vector<long int> s, int i, int j){
+long long int computeDeltaExchange(Matrix &CostMat, vector<long int> &s, int i, int j){
 
     long long int delta = 0;
 

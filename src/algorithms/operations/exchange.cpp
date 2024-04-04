@@ -5,7 +5,7 @@
 
 #include "../algorithms.h"
 
-vector<long int> exchange(vector<long int> s, int i, int j){
+vector<long int> exchange(vector<long int> &s, int i, int j){
 
     long int temp = s[i];
     s[i] = s[j];

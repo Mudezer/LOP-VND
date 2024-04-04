@@ -6,34 +6,36 @@
 #define LOP_VND_OUTPUT_H
 
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <sstream>
 using namespace std;
 
 class Output{
 private:
-    char *instanceName;
-    char *configuration;
-    long long int bestKnown;
+
+    string instanceName;
+    string algoClass;
+    string configuration;
+    string bestKnown;
     long long int bestCost;
     double elapsedTime;
-    long long int relative_deviation;
-public:
 
+    void findBestKnown(string instance_name);
+    vector<string> split(const string &s, char delimiter);
+public:
     Output();
     ~Output();
 
-    void setInstanceName(char *instanceName);
-    void setBestKnown(long long int bestKnown);
-    void setBestCost(long long int bestCost);
-    void setElapsedTime(double elapsedTime);
-    void setRelativeDeviation(long long int relative_deviation);
+    void setUp(string instanceName,
+               string algoClass,
+               string configuration,
+               long long int bestCost,
+               double elaspedTime);
+    void printOutput();
 
-    char *getInstanceName();
-    long long int getBestKnown();
-    long long int getBestCost();
-    double getElapsedTime();
-    long long int getRelativeDeviation();
 
-    void writeOutput();
 
 };
 
