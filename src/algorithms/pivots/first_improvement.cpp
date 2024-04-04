@@ -11,6 +11,7 @@ vector<long int> firstImprovement(Instance &instance, vector<long int> s,
     Matrix matrix = instance.getCostMat();
     vector<long int> bestS = s;
     long long int bestCost = instance.computeCost(s);
+
     for(int i=0; i<s.size(); i++){
         for(int j=i+1; j<s.size(); j++){
             if((bestCost + computeDelta(matrix, bestS, i, j )) > bestCost){

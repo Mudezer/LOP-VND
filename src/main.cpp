@@ -70,6 +70,7 @@ void run(Instance &instance, Configuration &configuration){
 
     Output output;
     output.setUp(instance.getInstanceName(),
+                  instance.getPSize(),
                   configuration.getAlgoClass(),
                   configuration.getConfiguration(),
                   instance.computeCost(finalSolution),

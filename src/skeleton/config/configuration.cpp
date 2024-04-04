@@ -17,7 +17,7 @@ void Configuration::parseArguments(int argc, char **argv){
             {"-i", required_argument, nullptr, 'i'},
             {"all", required_argument, nullptr, 'a'},
             {"iter", no_argument, nullptr, 't'},
-            {"vnd", no_argument, nullptr, 'v'},
+            {"vnd", required_argument, nullptr, 'v'},
             {"first", no_argument, nullptr, 'f'},
             {"best", no_argument, nullptr, 'b'},
             {"exchange", no_argument, nullptr, 'e'},
@@ -64,6 +64,7 @@ void Configuration::parseArguments(int argc, char **argv){
                 this->algorithmType = VND;
                 this->algoClass = "vnd";
                 this->configuration += "vnd_";
+                setUpVND( optarg);
                 cout << "Running VND algorithm\n" << endl;
                 break;
             case 'f':
@@ -131,15 +132,6 @@ string Configuration::getFileName(){
     return FileName;
 }
 
-bool Configuration::isAll(){
-    return all;
-}
-
-string Configuration::getAllAlgo(){
-    return all_algo;
-}
-
-
 
 
 string Configuration::getConfiguration(){
@@ -150,3 +142,23 @@ string Configuration::getAlgoClass(){
     return algoClass;
 }
 
+
+void Configuration::setUpVND(string opt) {
+    this->pivotAlgorithm = FIRST;
+    this->computePivot = firstImprovement;
+    this->configuration += "first_";
+    this->initializationType = CW;
+    this->computeInit = createCWHeuristicSolution;
+    this->configuration += "cw_";
+
+    if(opt == "TIE"){
+        this -> computeNeighborhoods = {transpose, insert, exchange};
+        this -> computeDeltas = {computeDeltaTranspose, computeDeltaInsert, computeDeltaExchange};
+        this -> configuration += "TIE";
+    }
+    else if(opt == "TEI"){
+        this -> computeNeighborhoods = {transpose, exchange, insert};
+        this -> computeDeltas = {computeDeltaTranspose, computeDeltaExchange, computeDeltaInsert};
+        this -> configuration += "TEI";
+    }
+}

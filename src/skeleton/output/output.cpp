@@ -9,11 +9,13 @@ Output::Output(){}
 Output::~Output(){}
 
 void Output::setUp(string instanceNamed,
+                   long int instanceSize,
                    string algoClass,
                    string configuration,
                    long long int bestCost,
                    double elapsedTime) {
     this->instanceName = instanceNamed;
+    this->instanceSize = instanceSize;
     this->algoClass = algoClass;
     this->configuration = configuration;
     this->bestCost = bestCost;
@@ -62,6 +64,10 @@ void Output::findBestKnown(string instance_name){
         this->bestCost = -1; // -1 means that the best known is not available
     }
 
+    this->bestKnowed = atoll(this->bestKnown.c_str());
+    this->relativeDeviation =  (100*(this->bestKnowed-this->bestCost)/this->bestKnowed);
+
+
 }
 
 void Output::printOutput(){
@@ -72,9 +78,15 @@ void Output::printOutput(){
     cout << "Best known: " << this->bestKnown << endl;
     cout << "Best cost: " << this->bestCost << endl;
     cout << "Elapsed time: " << this->elapsedTime << endl;
+    cout << "Best known: " << this->bestKnowed << endl;
+    cout << "Relative deviation: " << this->relativeDeviation << endl;
+
+
 
     string path_to_output = "results/" + this->algoClass + "/" + "res_"+ this->algoClass + ".csv";
     cout << "Output file: " << path_to_output << endl;
+
+
 
 //ios::out | ios::app
     ofstream file;
@@ -84,10 +96,11 @@ void Output::printOutput(){
         cerr << "File could not be opened for writing." << endl;
     }
 
-
-    file << this->instanceName << "," << this->configuration << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << endl;
+    // instance name, configuration, best cost, best known, elapsed time, relative deviation
+    file << this->instanceName << "," << this->configuration << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << ","  << this->relativeDeviation << endl;
 
     file.close();
+
 
 
 }

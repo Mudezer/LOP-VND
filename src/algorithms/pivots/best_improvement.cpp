@@ -13,17 +13,23 @@ vector<long int> bestImprovement(Instance &instance,
     vector<long int> bestS = s;
     long long int initialCost = instance.computeCost(s);
     long long int bestCost = instance.computeCost(s);
-    long long int actualCost;
     int k=0,l=0;
 
     for(int i=0;i<s.size(); i++){
         for(int j=i+1; j<s.size(); j++){
-                if((actualCost = initialCost+computeDelta(matrix, bestS, i, j))>bestCost){
+            if((initialCost + computeDelta(matrix, bestS, i, j)) > bestCost){
                 l = i, k= j;
-                bestCost = actualCost;
+                bestCost = initialCost + computeDelta(matrix, bestS, i, j);
             }
         }
     }
-    bestS = computeModification(bestS, l, k);
+
+    // following condition absolutely necessary if want to avoid transpose to loop forever
+    if( computeDelta(matrix, bestS, l, k) > 0){
+        bestS = computeModification(bestS, l, k);
+    }
+
+//    bestS = computeModification(bestS, l, k);
+
     return bestS;
 }

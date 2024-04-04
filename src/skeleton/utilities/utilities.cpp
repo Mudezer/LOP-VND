@@ -30,7 +30,6 @@ long long int computeDeltaTranspose(Matrix &CostMat, vector<long int> &s, int i,
     delta = CostMat[s[i+1]][s[i]] - CostMat[s[i]][s[i+1]];
 
     return delta;
-
 }
 
 long long int computeDeltaExchange(Matrix &CostMat, vector<long int> &s, int i, int j){
