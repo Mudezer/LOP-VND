@@ -72,6 +72,8 @@ void Output::findBestKnown(string instance_name){
 
 void Output::printOutput(){
 
+    parseConfiguration(this->configuration);
+
     cout << "Instance name: " << this->instanceName << endl;
     cout << "Algorithm class: " << this->algoClass << endl;
     cout << "Configuration: " << this->configuration << endl;
@@ -96,11 +98,33 @@ void Output::printOutput(){
         cerr << "File could not be opened for writing." << endl;
     }
 
-    // instance name, configuration, best cost, best known, elapsed time, relative deviation
-    file << this->instanceName << "," << this->configuration << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << ","  << this->relativeDeviation << endl;
+    // instance name, configuration,algoClass, pivot, neighboor, init , best cost, best known, elapsed time, relative deviation
+    file << this->instanceName << "," << this->configuration << "," << this->instanceSize << "," << this->algoClass << "," << this->pivot << "," << this->neighborhood << "," <<
+    this->init << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << ","  << this->relativeDeviation << endl;
 
     file.close();
 
+
+
+}
+
+void Output::parseConfiguration(std::string config) {
+
+    vector<string> splitResults = split(config, '_');
+
+    if(splitResults[0] == "iter"){
+        this->pivot = splitResults[1];
+        this->neighborhood = splitResults[2];
+        this->init = splitResults[3];
+    }
+    else if(splitResults[0] == "vnd"){
+        this->pivot = splitResults[1];
+        this->neighborhood = splitResults[3];
+        this->init = splitResults[2];
+    }
+    else{
+        cerr << "Unknown configuration" << endl;
+    }
 
 
 }

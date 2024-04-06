@@ -68,11 +68,6 @@ public:
     long long int (*computeDelta) (Matrix&, vector<long int>&, int, int);
     vector<vector<long int> (*) (vector<long int>&, int, int)> computeNeighborhoods;
     vector<long long int (*) (Matrix&, vector<long int>&, int, int)> computeDeltas;
-//    vector<vector<long int> (*) (Instance&)> computeInitializations;
-//    vector<vector<long int> (*) (Instance&,
-//                                vector<long int>,
-//                                vector<long int> (*) (vector<long int>&, int, int),
-//                                long long int (*) (Matrix&, vector<long int>&, int, int))> computePivots;
 
 
     //setters
@@ -81,10 +76,6 @@ public:
     //getters
     int getAlgorithmType();
     string getFileName();
-
-    // running all kind of algorithm type
-    bool isAll();
-    string getAllAlgo();
 
     string getAlgoClass();
     string getConfiguration();

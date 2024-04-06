@@ -30,6 +30,7 @@ private:
 
     void findBestKnown(string instance_name);
     vector<string> split(const string &s, char delimiter);
+    void parseConfiguration(string config);
 public:
     Output();
     ~Output();

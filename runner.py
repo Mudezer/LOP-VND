@@ -18,11 +18,14 @@ if __name__ == '__main__':
         means to run all the different iterative algorithms on
          all the instances in the assets/instances directory
     """
-    # os.system("make clean")
+    os.system("make clean")
     os.system("make")
 
-    input = sys.argv[1]
-    algotype = sys.argv[2]
+
+
+    # input = sys.argv[1]
+    # algotype = sys.argv[2]
+    algotype = "--iter"
 
     w = os.walk(input)
 
