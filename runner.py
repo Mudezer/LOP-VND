@@ -23,8 +23,10 @@ if __name__ == '__main__':
 
 
 
-    input = sys.argv[1]
-    algotype = sys.argv[2]
+    # input = sys.argv[1]
+    # algotype = sys.argv[2]
+
+    algotype = "--vnd"
 
     w = os.walk(input)
 

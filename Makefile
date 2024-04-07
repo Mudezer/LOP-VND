@@ -44,12 +44,10 @@ skeleton:
 	$(cc) $(CFLAGS) -c src/skeleton/output/output.cpp -o bin/output.o
 	$(cc) $(CFLAGS) -c src/main.cpp -o bin/main.o
 
-
-
 test_first:
 	#./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --random
 	#./lop -i assets/instances/N-tiw56r72_250 --iter --first --insert --random
-#	./lop -i assets/instances/N-tiw56r72_250 --iter --first --exchange --random
+#    ./lop -i assets/instances/N-tiw56r72_250 --iter --first --exchange --random
 	#./lop -i assets/instances/N-tiw56r72_250 --iter --first --transpose --cw
 #	./lop -i assets/instances/N-tiw56r72_250 --iter --first --insert --cw
 #	./lop -i assets/instances/N-tiw56r72_250 --iter --first --exchange --cw
@@ -65,7 +63,6 @@ test_best:
 test_vnd:
 	./lop -i assets/instances/N-tiw56r72_250 --vnd TIE
 	#./lop -i assets/instances/N-tiw56r72_250 --vnd --TEI
-
 
 clean:
 	rm -f src/*~ bin/*.o lop mourir outest
