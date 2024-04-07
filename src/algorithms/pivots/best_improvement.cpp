@@ -4,6 +4,14 @@
 
 #include "../algorithms.h"
 
+/***
+ * This function is used to find the best improvement in a given solution
+ * @param instance
+ * @param s
+ * @param computeModification
+ * @param computeDelta
+ * @return the best solution found
+ */
 vector<long int> bestImprovement(Instance &instance,
                                  vector<long int> s,
                                  vector<long int> (*computeModification) (vector<long int>&, int, int),

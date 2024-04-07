@@ -6,7 +6,11 @@
 #include <algorithm>   // std::shuffle => to shuffle the initial solution
 #include <random>      // std::default_random_engine => using the instance seed
 
-
+/***
+ *
+ * @param instance
+ * @return a random solution
+ */
 vector<long int> createRandomSolution(Instance &instance){
 
     vector<long int> s(instance.getPSize());

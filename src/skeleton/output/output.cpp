@@ -63,10 +63,8 @@ void Output::findBestKnown(string instance_name){
     else{
         this->bestCost = -1; // -1 means that the best known is not available
     }
-
     this->bestKnowed = atoll(this->bestKnown.c_str());
     this->relativeDeviation =  (100*(this->bestKnowed-this->bestCost)/this->bestKnowed);
-
 
 }
 
@@ -83,14 +81,10 @@ void Output::printOutput(){
     cout << "Best known: " << this->bestKnowed << endl;
     cout << "Relative deviation: " << this->relativeDeviation << endl;
 
-
-
     string path_to_output = "results/" + this->algoClass + "/" + "res_"+ this->algoClass + ".csv";
     cout << "Output file: " << path_to_output << endl;
 
 
-
-//ios::out | ios::app
     ofstream file;
     file.open(path_to_output, ios::app);
 

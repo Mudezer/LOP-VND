@@ -9,15 +9,15 @@
 #include <cstdlib>
 #include <string>
 #include "../skeleton/skeleton.h"
-#include "solution/solution.h"
+
 typedef vector<vector<long int>> Matrix;
 
 
-/*  Initialisation */
+/*  Initialisation Methods */
 vector<long int> createRandomSolution(Instance &instance);
 vector<long int> createCWHeuristicSolution(Instance &instance);
 
-/* Pivot */
+/* Pivot Procedures*/
 vector<long int> firstImprovement(Instance &instance,
                                   vector<long int> s,
                                   vector<long int> (*computeModification) (vector<long int>&, int, int),

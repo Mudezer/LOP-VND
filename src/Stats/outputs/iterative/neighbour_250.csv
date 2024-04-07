@@ -1,5 +1,0 @@
-Exch Exch.Dev Inse Inse.Dev Trans Trans.Dev exch.ins.p.value exch.trans.p.value trans.ins.p.value
-iter_best_exchange_random 3.57049230707097 iter_best_insert_random 5.02540611679944 iter_best_transpose_random 33.19687885281 3.63797880709172e-11 3.63797880709172e-12 3.63797880709172e-12
-iter_first_exchange_random 2.68772179729456 iter_first_insert_random 5.27656689916324 iter_first_transpose_random 33.298616377774 3.63797880709172e-12 3.63797880709172e-12 3.63797880709172e-12
-iter_best_exchange_cw 3.47337136640244 iter_best_insert_cw 5.04870173845386 iter_best_transpose_cw 20.6895392510665 7.27595761418344e-12 3.63797880709172e-12 3.63797880709172e-12
-iter_first_exchange_cw 2.54857717496414 iter_first_insert_cw 4.74463397922102 iter_first_transpose_cw 20.7815012756384 3.63797880709172e-12 3.63797880709172e-12 3.63797880709172e-12

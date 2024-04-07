@@ -38,7 +38,7 @@ df250 <- filter(df, Size == 250)
 
 # print(df150)
 
-## comparison between initial solutions generation
+## comparison between the two different neighbourhoods sequences
 
 ### n= 150 and n=250
 df.150.TEI <- filter(df150, Neighbour == "TEI")

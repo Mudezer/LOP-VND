@@ -1,7 +1,0 @@
-Best Best.Deviation First First.Deviation p.value
-iter_best_exchange_random 3.64335585842101 iter_first_exchange_random 2.95051657957667 1.89866477739998e-06
-iter_best_insert_random 5.21797037429794 iter_first_insert_random 5.42909083703441 0.13107475153447
-iter_best_transpose_random 35.5552302318571 iter_first_transpose_random 35.6570413598824 0.0142851695636637
-iter_best_exchange_cw 3.62868365465375 iter_first_exchange_cw 2.72500849330751 4.00177668780089e-10
-iter_best_insert_cw 5.01249727445629 iter_first_insert_cw 4.73340263877678 0.020500839666056
-iter_best_transpose_cw 22.5303893012667 iter_first_transpose_cw 22.6181428895067 0.0580596397303453

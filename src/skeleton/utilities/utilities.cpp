@@ -5,7 +5,14 @@
 #include "utilities.h"
 
 
-
+/**
+ *
+ * @param CostMat
+ * @param s
+ * @param i
+ * @param j
+ * @return the difference between the cost of the solution s and the cost of the solution s' after the insertion of i before j
+ */
 long long int computeDeltaInsert(Matrix &CostMat, vector<long int> &s, int i, int j){
     long long int delta = 0;
     long int k;
@@ -22,6 +29,14 @@ long long int computeDeltaInsert(Matrix &CostMat, vector<long int> &s, int i, in
     return delta;
 }
 
+/***
+ *
+ * @param CostMat
+ * @param s
+ * @param i
+ * @param j
+ * @return the difference between the cost of the solution s and the cost of the solution s' after the transposition of i and i+1
+ */
 long long int computeDeltaTranspose(Matrix &CostMat, vector<long int> &s, int i, int j) {
     long long int delta = 0;
 
@@ -32,6 +47,15 @@ long long int computeDeltaTranspose(Matrix &CostMat, vector<long int> &s, int i,
     return delta;
 }
 
+
+/***
+ *
+ * @param CostMat
+ * @param s
+ * @param i
+ * @param j
+ * @return the difference between the cost of the solution s and the cost of the solution s' after the exchange of i and j
+ */
 long long int computeDeltaExchange(Matrix &CostMat, vector<long int> &s, int i, int j){
 
     long long int delta = 0;

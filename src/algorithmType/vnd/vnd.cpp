@@ -3,7 +3,13 @@
 //
 
 #include "vnd.h"
-
+/***
+ * configure the VND algorithm with the following functions as arguments
+ * @param computeInitialSolution // function to compute the initial solution
+ * @param pivotImprove //   function to compute the improvement procedure
+ * @param neighbourOperations // vector of functions to compute the neighbour operations
+ * @param computeDeltas // vector of functions to compute the deltas(speedups) of the neighbour operations
+ */
 void VariableNeighbourDescent::configure(
         vector<long int> (*computeInitialSolution)(Instance&),
         vector<long int> (*pivotImprove)(Instance&,
@@ -19,6 +25,11 @@ void VariableNeighbourDescent::configure(
     this->computeDeltas = computeDeltas;
 }
 
+/**
+ * run the VND algorithm with the following instance
+ * @param instance
+ * @return the best solution found
+ */
 vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
     vector<long int> s = computeInitialSolution(instance);
     cout << "Initial solution: " << endl;

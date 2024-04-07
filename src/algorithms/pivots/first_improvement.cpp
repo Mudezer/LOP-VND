@@ -4,7 +4,14 @@
 
 #include "../algorithms.h"
 
-
+/***
+ * This function is used to find the first improvement in a given solution
+ * @param instance
+ * @param s
+ * @param computeModification
+ * @param computeDelta
+ * @return the first solution found
+ */
 vector<long int> firstImprovement(Instance &instance, vector<long int> s,
                                  vector<long int> (*computeModification) (vector<long int>&, int, int),
                                  long long int (*computeDelta) (Matrix&, vector<long int>&, int, int)){

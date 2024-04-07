@@ -36,7 +36,6 @@ df150 <- filter(df, Size == 150)
 df250 <- filter(df, Size == 250)
 
 ## comparison between initial solutions generation
-
 ### n= 150 and n=250
 df.150.cw <- filter(df150, Init == "cw")
 df.150.rnd <- filter(df150, Init == "random")
@@ -142,7 +141,7 @@ for(combo in init_neighbour_combination){
   ))
 
 }
-#
+
 # print(wilcoxon.pivot.150)
 # print(wilcoxon.pivot.250)
 
@@ -152,7 +151,6 @@ write.table(wilcoxon.pivot.250, file="src/Stats/outputs/iterative/pivot_250.csv"
 
 
 ## comparison between neighbour algorithms
-
 df.150.exchange <- filter(df150, Neighbour == "exchange")
 df.150.insertion <- filter(df150, Neighbour == "insert")
 df.150.transpose <- filter(df150, Neighbour == "transpose")

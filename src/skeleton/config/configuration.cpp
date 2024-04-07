@@ -10,12 +10,10 @@ Configuration::Configuration(){}
 Configuration::~Configuration(){}
 
 void Configuration::parseArguments(int argc, char **argv){
-    this->all = false;
     // instance:all:iter:vnd:pivot:neighbour:init"i:a:t:v:p:n:g"
     const char* const short_opts = "i:a:t:v:e:s:r:p:n:g:h";
     const option long_opts[] = {
             {"-i", required_argument, nullptr, 'i'},
-            {"all", required_argument, nullptr, 'a'},
             {"iter", no_argument, nullptr, 't'},
             {"vnd", required_argument, nullptr, 'v'},
             {"first", no_argument, nullptr, 'f'},
@@ -41,26 +39,13 @@ void Configuration::parseArguments(int argc, char **argv){
                 this->FileName = optarg;
                 cout << "Instance file: " << this->FileName << "\n" << endl;
                 break;
-            case 'a':
-                this->all = true;
-                this->all_algo = optarg;
-                cout << "Running all algorithms based on " << this->all_algo << "\n" << endl;
-//                if(this->all_algo == "iter")
-//                    setAllIterative();
-//                else if(this->all_algo == "vnd")
-//                    setAllVND();
-//                else
-                    cout << "Unknown algorithm\n" << endl;
-                break;
             case 't':
-                this->all = false;
                 this->algorithmType = ITERATIVE;
                 this->algoClass = "iter";
                 this->configuration += "iter_";
                 cout << "Running Iterative algorithm\n" << endl;
                 break;
             case 'v':
-                this->all = false;
                 this->algorithmType = VND;
                 this->algoClass = "vnd";
                 this->configuration += "vnd_";
@@ -119,6 +104,7 @@ void Configuration::parseArguments(int argc, char **argv){
                         "Usage: ./lop -i <instance_file> --all --vnd\n"
                         "Usage: ./lop -i <instance_file> --iter --exchange --insert --transpose --cw --random\n"
                         "Usage: ./lop -i <instance_file> --vnd --TIE\n";
+                exit(1);
                 break;
         }
     }

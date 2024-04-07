@@ -23,9 +23,8 @@ if __name__ == '__main__':
 
 
 
-    # input = sys.argv[1]
-    # algotype = sys.argv[2]
-    algotype = "--iter"
+    input = sys.argv[1]
+    algotype = sys.argv[2]
 
     w = os.walk(input)
 

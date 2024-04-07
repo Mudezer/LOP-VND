@@ -1,7 +1,0 @@
-CW CW.Deviation Random Random.Deviation p.value
-iter_best_exchange_cw 3.62868365465375 iter_best_exchange_random 3.64335585842101 0.928548201754893
-iter_best_insert_cw 5.01249727445629 iter_best_insert_random 5.21797037429794 0.0848496091239214
-iter_best_transpose_cw 22.5303893012667 iter_best_transpose_random 35.5552302318571 3.63797880709172e-12
-iter_first_exchange_cw 2.72500849330751 iter_first_exchange_random 2.95051657957667 0.0561791277541489
-iter_first_insert_cw 4.73340263877678 iter_first_insert_random 5.42909083703441 0.00117936985770939
-iter_first_transpose_cw 22.6181428895067 iter_first_transpose_random 35.6570413598824 3.63797880709172e-12

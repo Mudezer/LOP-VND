@@ -13,11 +13,8 @@ add_executable(LOP_VND src/main.cpp
         src/algorithms/pivots/best_improvement.cpp
         src/algorithms/pivots/first_improvement.cpp
         src/skeleton/config/configuration.cpp
-        src/algorithms/solution/solution.cpp
         src/algorithmType/iterative/iterative.cpp
         src/skeleton/utilities/utilities.cpp
         src/algorithmType/vnd/vnd.cpp
         src/skeleton/output/output.cpp
-        test/mourir.cpp
-        test/outest.cpp
 )

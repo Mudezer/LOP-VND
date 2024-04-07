@@ -4,7 +4,13 @@
 
 #include "iterative.h"
 
-
+/**
+ * configure the iterative algorithm with the following functions as arguments
+ * @param computeInitialSolution // function to compute the initial solution
+ * @param neighbourOperation // function to compute the neighbour operation
+ * @param computeDelta // function to compute the delta(speedups) of the neighbour operation
+ * @param pivotImprove // function to compute the improvement procedure
+ */
 void Iterative::configure(
         vector<long int> (*computeInitialSolution)(Instance&),
         vector<long int> (*neighbourOperation)(vector<long int>&, int, int),
@@ -21,6 +27,12 @@ void Iterative::configure(
     this->pivotImprove = pivotImprove;
 }
 
+/**
+ * run the iterative algorithm with the following instance and initial solution
+ * @param instance
+ * @param s
+ * @return the best solution found
+ */
 vector<long int> Iterative::runIterative(Instance &instance, vector<long int> s){
     vector<long int> bestS = s;
     vector<long int> improved;
@@ -51,6 +63,11 @@ vector<long int> Iterative::runIterative(Instance &instance, vector<long int> s)
 
 }
 
+/**
+ * run the iterative algorithm with the following instance
+ * @param instance
+ * @return the best solution found
+ */
 vector<long int> Iterative::runIterative(Instance &instance){
     vector<long int> s = computeInitialSolution(instance);
     cout << "Initial solution: " << endl;

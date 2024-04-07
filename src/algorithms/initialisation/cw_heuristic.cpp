@@ -4,7 +4,11 @@
 
 #include "../algorithms.h"
 
-
+/***
+ *  Compute the initial solution using the Chenery and Watanabe heuristic
+ * @param instance
+ * @return The initial solution created by the Chenery and Watanabe heuristic
+ */
 vector<long int> createCWHeuristicSolution(Instance &instance){
 
     vector<long int> s(instance.getPSize());

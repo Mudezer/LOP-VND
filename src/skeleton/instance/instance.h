@@ -24,18 +24,19 @@ class Instance{
         Instance();
         ~Instance();
 
+        // Getters
         long int getPSize();
-
         long int getSeed();
-
         string getInstanceName();
-
         vector<vector<long int>> getCostMat();
         void allocateMatrix();
 
+        // Read the instance from the file and generates the different variable and stores them in the instance object
         void readInstance(const string filename);
 
+        // Compute the cost of a solution
         long long int computeCost(vector<long int> &s);
+        // Compute the attractiveness of a row
         long long int computeAttractiveness(long int step, long int row);
 
 

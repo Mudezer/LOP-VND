@@ -2,7 +2,9 @@
 library(dplyr)
 
 rm(list=ls())
-df <- read.csv("results/iter/res_iter.csv", sep=",", header = FALSE)
+df <- read.csv("results/vnd/res_vnd.csv", sep=",", header = FALSE)
+
+
 df <- data.frame(df)
 colnames(df) <- c("Instance", "Algorithm","Size","AlgoClass","Pivot","Neighbour","Init","BestCost","BestKnown","Time","RelativeDev")
 # print(df)
@@ -20,8 +22,8 @@ df$BestCost <- as.numeric(df$BestCost)
 df$BestKnown <- as.numeric(df$BestKnown)
 best.known$BestKnown <- as.numeric(best.known$BestKnown)
 
+### ensure that the best known are correctly noted in the dataframe
 merged.df <- merge(df, best.known, by="Instance")
-
 merged.df <- merged.df[,-which(names(merged.df) == "BestKnown.x")]
 merged.df <- merged.df[,-which(names(merged.df) == "RelativeDev")]
 colnames(merged.df)[which(names(merged.df) == "BestKnown.y")] <- "BestKnown"
@@ -30,6 +32,7 @@ merged.df <- cbind(merged.df, Deviation)
 
 # print(merged.df)
 
+### compute the total time and average relative deviation of each algorithm
 total.time <- merged.df %>%
   group_by(Algorithm,Size) %>%
   summarise(Time = sum(Time))
@@ -43,4 +46,4 @@ sorted.df <- new.df %>% arrange(Size)
 
 print(sorted.df)
 
-write.table(sorted.df, file="src/Stats/outputs/iterative/general_iterative.csv", row.names = FALSE, quote=FALSE)
+write.table(sorted.df, file="src/Stats/outputs/vnd/general_vnd.csv", row.names = FALSE, quote=FALSE)

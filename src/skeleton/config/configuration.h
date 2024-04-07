@@ -45,40 +45,45 @@ private:
     string algoClass;
     string configuration;
 
-    // all flag
-    bool all;
-    string all_algo;
-
     int algorithmType;
     int pivotAlgorithm;
     int neighborhoodModification;
-    int vndNeighborhood;
     int initializationType;
 
 public:
     Configuration();
     ~Configuration();
 
+    //Initialisation Method pointer
     vector<long int> (*computeInit) (Instance&);
+
+    //Pivot Method pointer
     vector<long int> (*computePivot) (Instance&,
                                         vector<long int>,
                                         vector<long int> (*) (vector<long int>&, int, int),
                                         long long int (*) (Matrix&, vector<long int>&, int, int));
+    //Neighborhood Modification Method pointer
     vector<long int> (*computeNeighborhood) (vector<long int>&, int, int);
+
+    //Speed up the computation of the neighborhood modifications on the cost pointer
     long long int (*computeDelta) (Matrix&, vector<long int>&, int, int);
+
+    //VND Neighborhoods sequence
     vector<vector<long int> (*) (vector<long int>&, int, int)> computeNeighborhoods;
+    // VND Delta sequence
     vector<long long int (*) (Matrix&, vector<long int>&, int, int)> computeDeltas;
 
 
-    //setters
+    //Parse the command line argument when running the program
     void parseArguments(int argc, char **argv);
 
     //getters
     int getAlgorithmType();
     string getFileName();
-
     string getAlgoClass();
     string getConfiguration();
+
+    // sets up the vnd algorithm
     void setUpVND(string opt);
 
 
