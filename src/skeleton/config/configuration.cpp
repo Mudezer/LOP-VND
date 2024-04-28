@@ -10,19 +10,32 @@ Configuration::Configuration(){}
 Configuration::~Configuration(){}
 
 void Configuration::parseArguments(int argc, char **argv){
-    // instance:all:iter:vnd:pivot:neighbour:init"i:a:t:v:p:n:g"
-    const char* const short_opts = "i:a:t:v:e:s:r:p:n:g:h";
+
+    const char* const short_opts = "i:t:v:l:m:f:c:e:q:w:z:p:n:o";
     const option long_opts[] = {
             {"-i", required_argument, nullptr, 'i'},
+            // algo type
             {"iter", no_argument, nullptr, 't'},
             {"vnd", required_argument, nullptr, 'v'},
-            {"first", no_argument, nullptr, 'f'},
-            {"best", no_argument, nullptr, 'b'},
-            {"exchange", no_argument, nullptr, 'e'},
-            {"insert", no_argument, nullptr, 's'},
-            {"transpose", no_argument, nullptr, 'r'},
-            {"cw", no_argument, nullptr, 'c'},
-            {"random", no_argument, nullptr, 'g'},
+            {"ils", no_argument, nullptr, 'l'},
+            {"memetic", no_argument, nullptr, 'm'},
+
+            // Simple VND variables
+            {"--pivot", required_argument, nullptr, 'f'},
+            {"--init", required_argument, nullptr, 'c'},
+            {"--neighbour", required_argument, nullptr, 'e'},
+
+            // ILS variables
+
+            // memetic variables
+            {"--rank-comb",no_argument, nullptr, 'q'},
+            {"--rank-select", no_argument, nullptr,'w'},
+            {"--rank-mut", no_argument, nullptr, 'z'},
+            {"--pop-size", required_argument, nullptr, 'p'},
+            {"--mutation-rate", required_argument, nullptr, 'n'},
+            {"--max-generation", required_argument, nullptr, 'o'},
+
+            // help
             {"help", no_argument, nullptr, 'h'},
             {nullptr, no_argument, nullptr, 0}
 
@@ -52,54 +65,57 @@ void Configuration::parseArguments(int argc, char **argv){
                 setUpVND( optarg);
                 cout << "Running VND algorithm\n" << endl;
                 break;
-            case 'f':
-                this->pivotAlgorithm = FIRST;
-                this->configuration += "first_";
-                this->computePivot = firstImprovement;
-                cout << "First pivot algorithm\n" << endl;
+            case 'm':
+                this->algorithmType = MEMETIC;
+                this->algoClass = "memetic";
+                this->configuration += "memetic_";
+                this->initPopulation = randomPopulationInitialisation;
+                this->configuration += "random_init_";
+                cout << "Running Memetic algorithm\n" << endl;
                 break;
-            case 'b':
-                this->pivotAlgorithm = BEST;
-                this->configuration += "best_";
-                this->computePivot = bestImprovement;
-                cout << "Best pivot algorithm\n" << endl;
+            case 'f':
+                setPivotAlgorithm(optarg);
                 break;
             case 'e':
-                this->neighborhoodModification = EXCHANGE;
-                this->configuration += "exchange_";
-                this->computeNeighborhood = exchange;
-                this->computeDelta = computeDeltaExchange;
-                cout << "Exchange neighborhood\n" << endl;
-                break;
-            case 's':
-                this->neighborhoodModification = INSERT;
-                this->configuration += "insert_";
-                this->computeNeighborhood = insert;
-                this->computeDelta = computeDeltaInsert;
-                cout << "Insert neighborhood\n" << endl;
-                break;
-            case 'r':
-                this->neighborhoodModification = TRANSPOSE;
-                this->configuration += "transpose_";
-                this->computeNeighborhood = transpose;
-                this->computeDelta = computeDeltaTranspose;
-                cout << "Transpose neighborhood\n" << endl;
+                setNeighbourModification(optarg);
                 break;
             case 'c':
-                this->initializationType = CW;
-                this->configuration += "cw";
-                this->computeInit = createCWHeuristicSolution;
-                cout << "CW initialization\n" << endl;
+                setInitialisation(optarg);
                 break;
-            case 'g':
-                this->initializationType = RANDOM;
-                this->configuration += "random";
-                this->computeInit = createRandomSolution;
-                cout << "Random initialization\n" << endl;
+            case 'q':
+                this->recombine = recombination;
+                this->configuration += "rank_comb_";
+                cout << "Rank based recombination\n" << endl;
+                break;
+            case 'w':
+                this->select = randomSelection;
+                this->configuration += "rank_select_";
+                cout << "Rank based selection\n" << endl;
+                break;
+            case 'z':
+                this->mutate = randomMutation;
+                this->configuration += "rank_mut_";
+                cout << "Rank based mutation\n" << endl;
+                break;
+            case 'p':
+                this->populationSize = atoi(optarg);
+                this->configuration += "pop_" + to_string(this->populationSize) + "_";
+                cout << "Population size: " << this->populationSize << "\n" << endl;
+                break;
+            case 'n':
+                this->mutationRate = atof(optarg);
+                this->configuration += "mut_" + to_string(this->mutationRate) + "_";
+                cout << "Mutation rate: " << this->mutationRate << "\n" << endl;
+                break;
+            case 'o':
+                this->maxGeneration = atoi(optarg);
+                this->configuration += "gen_" + to_string(this->maxGeneration) + "_";
+                cout << "Max generation: " << this->maxGeneration << "\n" << endl;
                 break;
             case 'h':
             case '?':
             default:
+                // TODO: redo the help message
                 cout << "Usage: ./lop -i <instance_file> --all --iter\n"
                         "Usage: ./lop -i <instance_file> --all --vnd\n"
                         "Usage: ./lop -i <instance_file> --iter --exchange --insert --transpose --cw --random\n"
@@ -126,6 +142,88 @@ string Configuration::getConfiguration(){
 
 string Configuration::getAlgoClass(){
     return algoClass;
+}
+
+int Configuration::getPopulationSize(){
+    return this->populationSize;
+}
+
+float Configuration::getMutationRate(){
+    return this->mutationRate;
+}
+
+int Configuration::getMaxGeneration(){
+    return this->maxGeneration;
+}
+
+void Configuration::setPivotAlgorithm(string opt){
+
+    if(opt == "first"){
+        this->pivotAlgorithm = FIRST;
+        this->configuration += "first_";
+        this->computePivot = firstImprovement;
+        cout << "First pivot algorithm\n" << endl;
+    }
+    else if(opt == "best"){
+        this->pivotAlgorithm = BEST;
+        this->configuration += "best_";
+        this->computePivot = bestImprovement;
+        cout << "Best pivot algorithm\n" << endl;
+    }
+    else{
+        cerr << "Pivot algorithm not recognized." << endl;
+        exit(1);
+    }
+
+}
+
+void Configuration::setNeighbourModification(string opt){
+    if(opt == "exchange"){
+        this->neighborhoodModification = EXCHANGE;
+        this->configuration += "exchange_";
+        this->computeNeighborhood = exchange;
+        this->computeDelta = computeDeltaExchange;
+        cout << "Exchange neighborhood\n" << endl;
+    }
+    else if(opt == "insert"){
+        this->neighborhoodModification = INSERT;
+        this->configuration += "insert_";
+        this->computeNeighborhood = insert;
+        this->computeDelta = computeDeltaInsert;
+        cout << "Insert neighborhood\n" << endl;
+    }
+    else if(opt == "transpose"){
+        this->neighborhoodModification = TRANSPOSE;
+        this->configuration += "transpose_";
+        this->computeNeighborhood = transpose;
+        this->computeDelta = computeDeltaTranspose;
+        cout << "Transpose neighborhood\n" << endl;
+    }else{
+        cerr << "Neighborhood modification not recognized." << endl;
+        exit(1);
+    }
+
+}
+
+void Configuration::setInitialisation(string opt){
+
+    if(opt == "cw"){
+        this->initializationType = CW;
+        this->configuration += "cw";
+        this->computeInit = createCWHeuristicSolution;
+        cout << "CW initialization\n" << endl;
+    }
+    else if(opt =="random"){
+        this->initializationType = RANDOM;
+        this->configuration += "random";
+        this->computeInit = createRandomSolution;
+        cout << "Random initialization\n" << endl;
+    }
+    else{
+        cerr << "Initialization not recognized." << endl;
+        exit(1);
+    }
+
 }
 
 

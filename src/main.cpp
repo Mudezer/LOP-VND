@@ -45,7 +45,8 @@ void run(Instance &instance, Configuration &configuration){
 
     switch(configuration.getAlgorithmType()) {
         case ITERATIVE:
-        case VND: {
+        case VND:
+        case MEMETIC:{
 
 
             auto start = std::chrono::high_resolution_clock::now();
@@ -93,6 +94,10 @@ vector<long int> runInstance(Instance &instance, Configuration &configuration){
         VariableNeighbourDescent vnd = setVND(instance, configuration);
         return s = vnd.runVND(instance);
     }
+    else if(configuration.getAlgorithmType() == MEMETIC){
+        Memetic memetic = setMemetic(instance, configuration);
+        return s = memetic.runMemetic(instance);
+    }
     else{
         cerr << "Algorithm type not recognized." << endl;
         exit(1);
@@ -129,5 +134,20 @@ VariableNeighbourDescent setVND(Instance &instance, Configuration &config){
     return vnd;
 }
 
+Memetic setMemetic(Instance &instance, Configuration &config){
+
+    cout << "Running Memetic algorithm" << endl;
+    Memetic memetic;
+    memetic.configure(config.getPopulationSize(),
+                      config.getMutationRate(),
+                      config.getMaxGeneration(),
+                      config.initPopulation,
+                      config.recombine,
+                      config.mutate,
+                      config.select,
+
+    );
+
+}
 
 

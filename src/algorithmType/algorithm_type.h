@@ -8,6 +8,8 @@
 
 #include "vnd/vnd.h"
 #include "iterative/iterative.h"
+#include "genetic/memetic.h"
+
 
 
 

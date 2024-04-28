@@ -8,9 +8,13 @@
 #include <vector>
 #include <cstdlib>
 #include <string>
+#include <random>
+#include <algorithm>
 #include "../skeleton/skeleton.h"
 
 typedef vector<vector<long int>> Matrix;
+typedef vector<long int> Candidate;
+typedef vector<Candidate> Population;
 
 
 /*  Initialisation Methods */
@@ -31,6 +35,23 @@ vector<long int> bestImprovement(Instance &instance,
 vector<long int> exchange(vector<long int> &s, int i, int j);
 vector<long int> insert(vector<long int> &s, int i, int j);
 vector<long int> transpose(vector<long int> &s, int i, int j);
+
+/* Genetic Operators */
+// initialisation
+Population randomPopulationInitialisation(Instance& instance, int populationSize);
+// mutation
+Population randomMutation(Instance& instance, Population population, float mutationRate);
+// recombination
+Population recombination(Instance& instance, Population population, int populationSize);
+Population twoPointCrossover(Instance& instance, Candidate parent1, Candidate parent2);
+// selection
+Population randomSelection(Instance& instance, Population population, int populationSize);
+
+
+
+
+
+
 
 /* constants for a pseudo-random number generator, taken from
    Numerical Recipes in C book --- never trust the standard C random

@@ -19,6 +19,8 @@ using namespace std;
 /* algorithmType */
 #define ITERATIVE 1
 #define VND 2
+#define ILS 3
+#define MEMETIC 4
 
 /* Initialisation Type */
 #define RANDOM 1
@@ -50,6 +52,11 @@ private:
     int neighborhoodModification;
     int initializationType;
 
+    //Memetic
+    int populationSize;
+    float mutationRate;
+    int maxGeneration;
+
 public:
     Configuration();
     ~Configuration();
@@ -77,14 +84,30 @@ public:
     //Parse the command line argument when running the program
     void parseArguments(int argc, char **argv);
 
+    // VND Configuration
+    void setPivotAlgorithm(string opt);
+    void setNeighbourModification(string opt);
+    void setInitialisation(string opt);
+
+    // sets up the piped vnd algorithm
+    void setUpVND(string opt);
+
+
+    //Memetic Algorithm
+    Population (*initPopulation) (Instance&, int);
+    Population (*recombine) (Instance&, Population, int);
+    Population (*mutate) (Instance&, Population, float);
+    Population (*select) (Instance&, Population, int);
+
     //getters
     int getAlgorithmType();
     string getFileName();
     string getAlgoClass();
     string getConfiguration();
 
-    // sets up the vnd algorithm
-    void setUpVND(string opt);
+    int getPopulationSize();
+    float getMutationRate();
+    int getMaxGeneration();
 
 
 };

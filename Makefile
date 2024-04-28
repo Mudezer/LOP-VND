@@ -64,5 +64,14 @@ test_vnd:
 	./lop -i assets/instances/N-tiw56r72_250 --vnd TIE
 	#./lop -i assets/instances/N-tiw56r72_250 --vnd --TEI
 
+kek:
+	$(cc) $(CFLAGS) -o test/test test/test.cpp
+	$(cc) $(CFLAGS) -o test/test2 test/test2.cpp
+
+kek1:
+	#./test/test
+	./test/test2
+
+
 clean:
 	rm -f src/*~ bin/*.o lop mourir outest
