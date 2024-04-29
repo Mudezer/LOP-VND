@@ -11,7 +11,7 @@ Configuration::~Configuration(){}
 
 void Configuration::parseArguments(int argc, char **argv){
 
-    const char* const short_opts = "i:t:v:l:m:f:c:e:q:w:z:p:n:o";
+    const char* const short_opts = "i:t:v:l:m:f:c:e:q:w:z:p:n:o:r:s:k";
     const option long_opts[] = {
             {"-i", required_argument, nullptr, 'i'},
             // algo type
@@ -21,19 +21,22 @@ void Configuration::parseArguments(int argc, char **argv){
             {"memetic", no_argument, nullptr, 'm'},
 
             // Simple VND variables
-            {"--pivot", required_argument, nullptr, 'f'},
-            {"--init", required_argument, nullptr, 'c'},
-            {"--neighbour", required_argument, nullptr, 'e'},
+            {"pivot", required_argument, nullptr, 'f'},
+            {"init", required_argument, nullptr, 'c'},
+            {"neighbour", required_argument, nullptr, 'e'},
 
             // ILS variables
+            {"perturb", required_argument, nullptr, 'r'},
+            {"time", required_argument, nullptr, 's'},
+            {"moves", required_argument, nullptr, 'k'},
 
             // memetic variables
-            {"--rank-comb",no_argument, nullptr, 'q'},
-            {"--rank-select", no_argument, nullptr,'w'},
-            {"--rank-mut", no_argument, nullptr, 'z'},
-            {"--pop-size", required_argument, nullptr, 'p'},
-            {"--mutation-rate", required_argument, nullptr, 'n'},
-            {"--max-generation", required_argument, nullptr, 'o'},
+            {"rank-comb",no_argument, nullptr, 'q'},
+            {"rank-select", no_argument, nullptr,'w'},
+            {"rank-mut", no_argument, nullptr, 'z'},
+            {"pop", required_argument, nullptr, 'p'},
+            {"rate", required_argument, nullptr, 'n'},
+            {"gen", required_argument, nullptr, 'o'},
 
             // help
             {"help", no_argument, nullptr, 'h'},
@@ -43,7 +46,6 @@ void Configuration::parseArguments(int argc, char **argv){
 
     while(true){
         const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);
-
         if(-1 == opt)
             break;
 
@@ -65,6 +67,12 @@ void Configuration::parseArguments(int argc, char **argv){
                 setUpVND( optarg);
                 cout << "Running VND algorithm\n" << endl;
                 break;
+            case 'l':
+                this->algorithmType = ILS;
+                this->algoClass = "ils";
+                this->configuration += "ils_";
+                cout << "Running ILS algorithm\n" << endl;
+                break;
             case 'm':
                 this->algorithmType = MEMETIC;
                 this->algoClass = "memetic";
@@ -82,13 +90,22 @@ void Configuration::parseArguments(int argc, char **argv){
             case 'c':
                 setInitialisation(optarg);
                 break;
+            case 'r':
+                setPerturbation(optarg);
+                break;
+            case 's':
+                this->maxTime = atof(optarg);
+                break;
+            case 'k':
+                this->perturbNbr = atoi(optarg);
+                break;
             case 'q':
                 this->recombine = recombination;
                 this->configuration += "rank_comb_";
                 cout << "Rank based recombination\n" << endl;
                 break;
             case 'w':
-                this->select = randomSelection;
+                this->select = rankSelection;
                 this->configuration += "rank_select_";
                 cout << "Rank based selection\n" << endl;
                 break;
@@ -156,7 +173,17 @@ int Configuration::getMaxGeneration(){
     return this->maxGeneration;
 }
 
+double Configuration::getMaxTime(){
+    return this->maxTime;
+}
+
+int Configuration::getPerturbNbr(){
+    return this->perturbNbr;
+}
+
 void Configuration::setPivotAlgorithm(string opt){
+
+    cout << "Pivot algorithm: " << opt << endl;
 
     if(opt == "first"){
         this->pivotAlgorithm = FIRST;
@@ -226,7 +253,6 @@ void Configuration::setInitialisation(string opt){
 
 }
 
-
 void Configuration::setUpVND(string opt) {
     this->pivotAlgorithm = FIRST;
     this->computePivot = firstImprovement;
@@ -246,3 +272,25 @@ void Configuration::setUpVND(string opt) {
         this -> configuration += "TEI";
     }
 }
+
+
+void Configuration::setPerturbation(string opt){
+    if(opt == "tranpose"){
+        this->perturbation = transpose;
+        this->configuration += "perturb_transpose_";
+    }
+    else if(opt == "exchange"){
+        this->perturbation = exchange;
+        this->configuration += "perturb_exchange_";
+    }
+    else if(opt == "insert"){
+        this->perturbation = insert;
+        this->configuration += "perturb_insert_";
+    }
+    else{
+        cerr << "Perturbation not recognized." << endl;
+        exit(1);
+    }
+
+}
+

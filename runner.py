@@ -1,13 +1,16 @@
 import os
 import sys
 
-algorithm_types = ["--iter", "--vnd"]
+algorithm_types = ["--iter", "--vnd", "--memetic"]
 vnd_sequences = ["TIE", "TEI"]
-initialisations = ["--random", "--cw"]
-pivot_rules = ["--best", "--first"]
-neighbourhoods = ["--exchange", "--insert", "--transpose"]
+initialisations = ["--init random", "--init cw"]
+pivot_rules = ["--pivot best", "--pivot first"]
+neighbourhoods = ["--neighbour exchange", "--neighbour insert", "--neighbour transpose"]
+
+
 
 input = "assets/instances"
+input = "assets/size_150"
 
 if __name__ == '__main__':
     """
@@ -53,6 +56,9 @@ if __name__ == '__main__':
                 os.system(command)
 
 
-
+        elif algotype == "--memetic":
+            command = f"./lop -i {input}/{instance} --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --gen 10"
+            print(command)
+            os.system(command)
 
 

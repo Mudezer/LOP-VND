@@ -4,11 +4,12 @@
 
 #include "memetic.h"
 
+
 void Memetic::configure(
         int populationSize,
         float mutationRate,
         int maxGeneration,
-        Population (*computeInitialPopulation) (Instance&),
+        Population (*computeInitialPopulation) (Instance& , int),
         Population (*recombination) (Instance&, Population, int),
         Population (*mutation) (Instance&, Population, float),
         Population (*selection) (Instance&, Population, int),
@@ -52,9 +53,9 @@ bool Memetic::termination(int actualGeneration){
 }
 
 
-Candidate Memetic::run(Instance& instance){
+Candidate Memetic::runMemetic(Instance& instance){
 
-    Population parents = computeInitialPopulation(instance); // SP
+    Population parents = computeInitialPopulation(instance, populationSize); // SP
     parents = subsidiaryLocalSearch(instance, parents);
 
     int actualGen = 0;

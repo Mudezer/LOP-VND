@@ -3,7 +3,6 @@
 //
 
 #include "skeleton/skeleton.h"
-//#include "skeleton/output/output.h"
 #include "algorithms/algorithms.h"
 #include "algorithmType/algorithm_type.h"
 #include <chrono>
@@ -13,6 +12,8 @@ void run(Instance &instance, Configuration &configuration);
 vector<long int> runInstance(Instance &instance, Configuration &configuration);
 Iterative setIterative(Instance &instance, Configuration &config);
 VariableNeighbourDescent setVND(Instance &instance, Configuration &config);
+IterativeLocalSearch setILS(Instance &instance, Configuration &config);
+Memetic setMemetic(Instance &instance, Configuration &config);
 
 
 int main(int argc, char **argv){
@@ -46,6 +47,7 @@ void run(Instance &instance, Configuration &configuration){
     switch(configuration.getAlgorithmType()) {
         case ITERATIVE:
         case VND:
+        case ILS:
         case MEMETIC:{
 
 
@@ -69,7 +71,15 @@ void run(Instance &instance, Configuration &configuration){
             break;
     }
 
-    Output output;
+    cout << "Final solution: " << endl;
+    for (long i : finalSolution)
+        cout << i << " ";
+    cout << endl;
+
+    cout << "Final solution cost: " << instance.computeCost(finalSolution) << endl;
+
+
+    /*Output output;
     output.setUp(instance.getInstanceName(),
                   instance.getPSize(),
                   configuration.getAlgoClass(),
@@ -77,7 +87,7 @@ void run(Instance &instance, Configuration &configuration){
                   instance.computeCost(finalSolution),
                   time);
 
-    output.printOutput();
+    output.printOutput();*/
 
 
 
@@ -93,6 +103,10 @@ vector<long int> runInstance(Instance &instance, Configuration &configuration){
     else if(configuration.getAlgorithmType() == VND){
         VariableNeighbourDescent vnd = setVND(instance, configuration);
         return s = vnd.runVND(instance);
+    }
+    else if(configuration.getAlgorithmType() == ILS){
+        IterativeLocalSearch ils = setILS(instance, configuration);
+        return s = ils.runILS(instance);
     }
     else if(configuration.getAlgorithmType() == MEMETIC){
         Memetic memetic = setMemetic(instance, configuration);
@@ -134,6 +148,21 @@ VariableNeighbourDescent setVND(Instance &instance, Configuration &config){
     return vnd;
 }
 
+IterativeLocalSearch setILS(Instance &instance, Configuration &config){
+
+    cout << "Running ILS algorithm" << endl;
+    IterativeLocalSearch ils;
+    ils.configure(config.getMaxTime(),
+                    config.getPerturbNbr(),
+                    config.computeInit,
+                    config.perturbation,
+                    config.computeNeighborhood,
+                    config.computeDelta
+                  );
+    return ils;
+
+}
+
 Memetic setMemetic(Instance &instance, Configuration &config){
 
     cout << "Running Memetic algorithm" << endl;
@@ -145,8 +174,10 @@ Memetic setMemetic(Instance &instance, Configuration &config){
                       config.recombine,
                       config.mutate,
                       config.select,
-
-    );
+                      config.computeNeighborhood,
+                      config.computeDelta
+                      );
+    return memetic;
 
 }
 

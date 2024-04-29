@@ -21,9 +21,8 @@ add_executable(LOP_VND src/main.cpp
         src/algorithms/genetic/initialisation/random_initialisation.cpp
         src/algorithms/genetic/recombination/crossover/two_point_crossover.cpp
         src/algorithms/genetic/recombination/recombination.cpp
-        test/test.cpp
         src/algorithmType/genetic/memetic.cpp
         src/algorithms/genetic/mutation/mutation.cpp
         src/algorithms/genetic/selection/selection.cpp
-        test/test2.cpp
+        src/algorithmType/iterative_local_search/iterative_local_search.cpp
 )

@@ -8,82 +8,47 @@
 #include <vector>
 #include <random>
 #include <algorithm>
-#include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
 typedef vector<long int> Candidate;
-typedef vector<Candidate> Population;
 
-Population twoPointCrossover(Candidate parent1, Candidate parent2){
-    Population childs;
-    Candidate child1;
-    Candidate child2;
 
-    int pivot1 = rand() % parent1.size()+1;
-    int pivot2 = rand() % parent1.size()+1;
+// Hash function
+struct hashFunction
+{
+    size_t operator()(const vector<long int>
+                      &myVector) const
+    {
+        std::hash<int> hasher;
+        size_t answer = 0;
 
-    if(pivot1 > pivot2){
-        swap(pivot1, pivot2);
+        for (int i : myVector)
+        {
+            answer ^= hasher(i) + 0x9e3779b9 +
+                      (answer << 6) + (answer >> 2);
+        }
+        return answer;
+    }
+};
+
+typedef unordered_set<Candidate,hashFunction> History;
+
+
+History updateHistory(Candidate candidate, History history){
+    if(history.find(candidate) == history.end()){
+        history.insert(candidate);
+        cout << "Inserted" << endl;
+    }else {
+        cout << "Already in history" << endl;
     }
 
-    for(int i = 0; i<pivot1; i++){
-        child1.push_back(parent1[i]);
-        child2.push_back(parent2[i]);
-    }
-
-    for(int i = pivot1; i<pivot2; i++){
-        child1.push_back(parent2[i]);
-        child2.push_back(parent1[i]);
-    }
-
-    for(int i = pivot2; i<parent1.size(); i++){
-        child1.push_back(parent1[i]);
-        child2.push_back(parent2[i]);
-    }
-
-    childs.push_back(child1);
-    childs.push_back(child2);
-
-
-    return childs;
+    return history;
 }
 
-Candidate reparefilsdepute(Candidate candidate){
-
-    vector<bool> used(candidate.size(), false);
-    vector<long int> duplicates_idx;
-    vector<long int> missing;
-
-    for(int i=0; i<candidate.size(); i++){
-        if(used[candidate[i]]){
-            duplicates_idx.push_back(i);
-        }else{
-            used[candidate[i]] = true;
-        }
-    }
-
-    for(int i=0; i<used.size(); i++){
-        if(!used[i]){
-            missing.push_back(i);
-        }
-    }
-
-
-
-    random_device rd;
-    mt19937 g(rd());
-
-    // Shuffle the data vector
-    std::shuffle(missing.begin(), missing.end(), g);
-
-
-
-    for(int i = 0; i<duplicates_idx.size(); i++){
-        candidate[duplicates_idx[i]] = missing[i];
-    }
-
-    return candidate;
+bool isInHistory(Candidate candidate, History history) {
+    return history.find(candidate) == history.end();
 }
 
 
@@ -91,61 +56,19 @@ Candidate reparefilsdepute(Candidate candidate){
 
 int main(int argc, char **argv) {
 
-//    srand(10);
+    Candidate candidate1 = {1, 2, 3, 4, 5};
+    Candidate candidate2 = {1, 2, 3, 4, 5};
+    Candidate candidate3 = {5, 3, 2, 1, 4};
 
+    History history;
 
-    Candidate parent1 = vector<long int> (150);
-    Candidate parent2 = vector<long int> (150);
+    history = updateHistory(candidate1, history);
+    history = updateHistory(candidate3, history);
+    history = updateHistory(candidate2, history);
 
-    // Create a vector to store the numbers
-
-
-    // Fill the vector with integers from 0 to 149
-    std::iota(parent1.begin(), parent1.end(), 0);
-    std::iota(parent2.begin(), parent2.end(), 0);
-
-
-    // Obtain a time-based seed:
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-
-    mt19937 generator(seed);
-
-
-    // Shuffle the vector using the default random engine
-    std::shuffle(parent1.begin(), parent1.end(), generator);
-    std::shuffle(parent2.begin(), parent2.end(), generator);
-    std::shuffle(parent2.begin(), parent2.end(), generator);
-
-    cout << "Parent 1: ";
-    for(int i = 0; i<parent1.size(); i++){
-        cout << parent1[i] << " ";
-    }
-    cout << endl;
-
-    cout << "Parent 2: ";
-    for(int i = 0; i<parent2.size(); i++){
-        cout << parent2[i] << " ";
-    }
-    cout << endl;
-
-    Population childs = twoPointCrossover(parent1, parent2);
-
-    Candidate child1 = childs[0];
-
-    cout << "Child 1: ";
-    for(int i = 0; i<child1.size(); i++){
-        cout << child1[i] << " ";
-    }
-    cout << endl;
-
-    child1 = reparefilsdepute(child1);
-
-    cout << "Child 1: ";
-    for(int i = 0; i<child1.size(); i++){
-        cout << child1[i] << " ";
-    }
-    cout << endl;
-
+    cout << "Is candidate1 in history: " << isInHistory(candidate1, history) << endl;
+    cout << "Is candidate2 in history: " << isInHistory(candidate2, history) << endl;
+    cout << "Is candidate3 in history: " << isInHistory(candidate3, history) << endl;
 
 
     return 0;

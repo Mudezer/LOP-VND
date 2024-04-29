@@ -5,12 +5,17 @@
 #ifndef LOP_VND_MEMETIC_H
 #define LOP_VND_MEMETIC_H
 
-#include "../../skeleton/skeleton.h"
+#include "../iterative/iterative.h"
+#include "../../skeleton/instance/instance.h"
+#include "../../algorithms/algorithms.h"
+
+typedef vector<vector<long int>> Population;
+typedef vector<long int> Candidate;
 
 
 class Memetic{
 private:
-    Population (*computeInitialPopulation) (Instance&);
+    Population (*computeInitialPopulation) (Instance&,int);
     Population (*recombination) (Instance&, Population, int);
     Population (*mutation) (Instance&, Population, float);
     Population (*selection) (Instance&, Population, int);
@@ -32,7 +37,7 @@ public:
             int populationSize,
             float mutationRate,
             int maxGeneration,
-            Population (*computeInitialPopulation) (Instance&),
+            Population (*computeInitialPopulation) (Instance&,int),
             Population (*recombination) (Instance&, Population, int),
             Population (*mutation) (Instance&, Population, float),
             Population (*selection) (Instance&, Population, int),
@@ -40,7 +45,7 @@ public:
             long long int(*computeDelta) (Matrix&, Candidate&, int, int)
     );
 
-    Candidate run(Instance& instance);
+    Candidate runMemetic(Instance& instance);
 };
 
 #endif //LOP_VND_MEMETIC_H

@@ -13,6 +13,8 @@
 #include <string>
 #include <getopt.h>
 
+typedef vector<long int> Candidate;
+typedef vector<Candidate> Population;
 typedef vector<vector<long int>> Matrix;
 using namespace std;
 
@@ -41,6 +43,14 @@ using namespace std;
 #define TRANS_EXCH_INS 1
 #define TRANS_INS_EXCH 2
 
+
+
+/* ILS */
+
+
+/* Memetic Algorithm */
+
+
 class Configuration{
 private:
     string FileName;
@@ -52,10 +62,16 @@ private:
     int neighborhoodModification;
     int initializationType;
 
+    //ILS
+    double maxTime;
+    int perturbNbr;
+
     //Memetic
+
     int populationSize;
     float mutationRate;
     int maxGeneration;
+
 
 public:
     Configuration();
@@ -92,6 +108,10 @@ public:
     // sets up the piped vnd algorithm
     void setUpVND(string opt);
 
+    // sets up the piped ils algorithm
+    void setUpILS(string opt);
+    void setPerturbation(string opt);
+    Candidate (*perturbation) (Candidate&, int, int);
 
     //Memetic Algorithm
     Population (*initPopulation) (Instance&, int);
@@ -108,6 +128,9 @@ public:
     int getPopulationSize();
     float getMutationRate();
     int getMaxGeneration();
+
+    double getMaxTime();
+    int getPerturbNbr();
 
 
 };

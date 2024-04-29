@@ -50,14 +50,14 @@ vector<long int> Iterative::runIterative(Instance &instance, vector<long int> s)
 
     }
 
-    cout << "Best solution: " << endl;
+    /*cout << "Best solution: " << endl;
     for (int i = 0; i < bestS.size(); i++) {
         cout << bestS[i] << " ";
     }
     cout << endl;
 
     cout << "Best solution cost: " << instance.computeCost(bestS) << endl;
-    cout << "Number of iterations: " << iteration << endl;
+    cout << "Number of iterations: " << iteration << endl;*/
 
     return bestS;
 

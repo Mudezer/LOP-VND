@@ -30,15 +30,7 @@ void VariableNeighbourDescent::configure(
  * @param instance
  * @return the best solution found
  */
-vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
-    vector<long int> s = computeInitialSolution(instance);
-    cout << "Initial solution: " << endl;
-    for (long i : s)
-        cout << i << " ";
-
-    cout << endl;
-
-    cout << "Initial solution cost: " << instance.computeCost(s) << endl;
+vector<long int> VariableNeighbourDescent::runVND(Instance &instance, vector<long int> s){
 
     vector<long int> bestS = s;
     int k = neighbourOperations.size(); // number of neighbourhoods
@@ -63,6 +55,20 @@ vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
     cout << "Best solution cost: " << instance.computeCost(bestS) << endl;
 
     return bestS;
+
+}
+
+vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
+    vector<long int> s = computeInitialSolution(instance);
+    cout << "Initial solution: " << endl;
+    for (long i : s)
+        cout << i << " ";
+
+    cout << endl;
+
+    cout << "Initial solution cost: " << instance.computeCost(s) << endl;
+
+    return runVND(instance, s);
 
 }
 

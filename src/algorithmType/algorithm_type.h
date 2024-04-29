@@ -8,6 +8,7 @@
 
 #include "vnd/vnd.h"
 #include "iterative/iterative.h"
+#include "iterative_local_search/iterative_local_search.h"
 #include "genetic/memetic.h"
 
 

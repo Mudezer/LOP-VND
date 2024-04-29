@@ -11,7 +11,7 @@
 #include <random>
 #include <algorithm>
 #include "../skeleton/skeleton.h"
-
+//#include "../skeleton/instance/instance.h"
 typedef vector<vector<long int>> Matrix;
 typedef vector<long int> Candidate;
 typedef vector<Candidate> Population;
@@ -45,7 +45,7 @@ Population randomMutation(Instance& instance, Population population, float mutat
 Population recombination(Instance& instance, Population population, int populationSize);
 Population twoPointCrossover(Instance& instance, Candidate parent1, Candidate parent2);
 // selection
-Population randomSelection(Instance& instance, Population population, int populationSize);
+Population rankSelection(Instance& instance, Population population, int populationSize);
 
 
 

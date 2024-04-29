@@ -5,7 +5,8 @@
 #ifndef LOP_VND_ITERATIVE_H
 #define LOP_VND_ITERATIVE_H
 
-#include "../../skeleton/skeleton.h"
+//#include "../../skeleton/skeleton.h"
+#include "../../skeleton/instance/instance.h"
 typedef vector<vector<long int>> Matrix;
 
 

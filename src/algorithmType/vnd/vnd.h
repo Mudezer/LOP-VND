@@ -5,7 +5,8 @@
 #ifndef LOP_VND_VARIABLENEIGHBOORDESCEND_H
 #define LOP_VND_VARIABLENEIGHBOORDESCEND_H
 
-#include "../../skeleton/skeleton.h"
+//#include "../../skeleton/skeleton.h"
+#include "../../skeleton/instance/instance.h"
 typedef vector<vector<long int>> Matrix;
 
 class VariableNeighbourDescent{
@@ -29,7 +30,7 @@ public:
             vector<vector<long int> (*) (vector<long int>&, int, int)> neighbourOperations,
             vector<long long int (*) (Matrix&, vector<long int>&, int, int)> computeDeltas
     );
-//    vector<long int> runVND(Instance &instance, vector<long int> s);
+    vector<long int> runVND(Instance &instance, vector<long int> s);
     vector<long int> runVND(Instance &instance);
 
 };
