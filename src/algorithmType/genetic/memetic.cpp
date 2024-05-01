@@ -8,7 +8,7 @@
 void Memetic::configure(
         int populationSize,
         float mutationRate,
-        int maxGeneration,
+        double maxTime,
         Population (*computeInitialPopulation) (Instance& , int),
         Population (*recombination) (Instance&, Population, int),
         Population (*mutation) (Instance&, Population, float),
@@ -18,10 +18,10 @@ void Memetic::configure(
 
         ){
 
+    cout << "Configuring Memetic Algorithm\n" << endl;
     this->populationSize = populationSize;
     this->mutationRate = mutationRate;
-    this->maxGeneration = maxGeneration;
-
+    this->maxTime = maxTime;
     this->computeInitialPopulation = computeInitialPopulation;
     this->recombination = recombination;
     this->mutation = mutation;
@@ -31,37 +31,38 @@ void Memetic::configure(
             createRandomSolution,
             neighbourOperation,
             computeDelta,
-            bestImprovement // maybe change for first improvement
+            firstImprovement // maybe change for first improvement
             );
-
-
-
 }
 
 Population Memetic::subsidiaryLocalSearch(Instance &instance, Population population) {
-    Population newPop;
+    Population newPop = vector<Candidate> (population.size());
 
     for(int i = 0; i<population.size(); i++){
-        newPop.push_back(this->localSearch.runIterative(instance, population[i]));
+        newPop[i] = (localSearch.runIterative(instance, population[i]));
     }
 
     return newPop;
 }
 
-bool Memetic::termination(int actualGeneration){
-    return actualGeneration < this->maxGeneration;
+bool Memetic::termination(Time start, Time actual){
+    auto duration = chrono::duration_cast<chrono::microseconds>(actual - start);
+
+    return ((double) duration.count()) / 1000000 > this->maxTime;
 }
 
 
 Candidate Memetic::runMemetic(Instance& instance){
 
+
+    Time start = Clock::now();
     Population parents = computeInitialPopulation(instance, populationSize); // SP
     parents = subsidiaryLocalSearch(instance, parents);
 
-    int actualGen = 0;
     Population children;
     Population family;
     Population mutated;
+    int iteration = 0;
 
     do {
         children = recombination(instance, parents, populationSize); // SPR
@@ -75,9 +76,10 @@ Candidate Memetic::runMemetic(Instance& instance){
 
         family.insert(family.end(), mutated.begin(), mutated.end());
         parents = selection(instance, family, populationSize);
-    }while(termination(actualGen++));
+        iteration++;
+    }while(!termination(start, Clock::now()));
 
-
+    cout << "Iteration: " << iteration << endl;
     return parents[0];
 
 }

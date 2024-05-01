@@ -15,13 +15,12 @@
  */
 long long int computeDeltaInsert(Matrix &CostMat, vector<long int> &s, int i, int j){
     long long int delta = 0;
-    long int k;
     if(i<j){
-        for(k = i+1; k<=j; k++){
+        for(long int k = i+1; k<=j; k++){
             delta += CostMat[s[k]][s[i]] - CostMat[s[i]][s[k]];
         }
     }else if(i>j){
-        for(k=j;k<i;k++){
+        for(long int k=j;k<i;k++){
             delta += CostMat[s[i]][s[k]] - CostMat[s[k]][s[i]];
         }
     }
@@ -57,7 +56,6 @@ long long int computeDeltaTranspose(Matrix &CostMat, vector<long int> &s, int i,
  * @return the difference between the cost of the solution s and the cost of the solution s' after the exchange of i and j
  */
 long long int computeDeltaExchange(Matrix &CostMat, vector<long int> &s, int i, int j){
-
     long long int delta = 0;
 
     for(int k = i; k<j; k++){

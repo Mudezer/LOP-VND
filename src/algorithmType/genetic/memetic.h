@@ -9,6 +9,8 @@
 #include "../../skeleton/instance/instance.h"
 #include "../../algorithms/algorithms.h"
 
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::time_point<Clock> Time;
 typedef vector<vector<long int>> Population;
 typedef vector<long int> Candidate;
 
@@ -20,13 +22,14 @@ private:
     Population (*mutation) (Instance&, Population, float);
     Population (*selection) (Instance&, Population, int);
     Iterative localSearch;
-    bool termination(int actualGeneration);
+    bool termination(Time start, Time actual);
 
     int populationSize;
     float mutationRate;
-    int maxGeneration;
+    double maxTime;
 
-    Population subsidiaryLocalSearch(Instance& instance, Population population);
+    Population subsidiaryLocalSearch(Instance& instance,
+                                     Population population);
 
 
 public:
@@ -36,7 +39,7 @@ public:
     void configure(
             int populationSize,
             float mutationRate,
-            int maxGeneration,
+            double maxTime,
             Population (*computeInitialPopulation) (Instance&,int),
             Population (*recombination) (Instance&, Population, int),
             Population (*mutation) (Instance&, Population, float),

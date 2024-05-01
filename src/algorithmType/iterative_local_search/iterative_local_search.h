@@ -45,16 +45,15 @@ private:
     double maxTime;
     int perturbNbr;
     History history;
+
     Candidate (*computeInitialSolution) (Instance&);
     Candidate (*perturbation) (Candidate&, int, int);
-
     Candidate (*computeModification) (Candidate&, int, int);
     long long int (*computeDelta) (Matrix&, Candidate&, int, int);
-    Candidate subsidiaryLocalSearch(Instance& instance, Candidate candidate);
 
+    Candidate subsidiaryLocalSearch(Instance& instance, Candidate candidate);
     Candidate randomPerturbation(Candidate& candidate, int nbrOfMoves);
     void updateHistory(Candidate candidate);
-//    bool condition(Candidate candidate);
     bool termination(Time start, Time actual);
     bool isInHistory(Candidate candidate);
 

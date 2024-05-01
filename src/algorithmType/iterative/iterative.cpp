@@ -37,12 +37,12 @@ vector<long int> Iterative::runIterative(Instance &instance, vector<long int> s)
     vector<long int> bestS = s;
     vector<long int> improved;
     bool improvement = true;
-    int iteration = 0;
+//    int iteration = 0;
 
     while(improvement){
         improvement = false;
         improved = pivotImprove(instance, bestS, neighbourOperation, computeDelta);
-        iteration++;
+//        iteration++;
         if(!(bestS == improved)){
             bestS = improved;
             improvement = true;

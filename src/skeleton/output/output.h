@@ -14,13 +14,23 @@ using namespace std;
 
 class Output{
 private:
-
+    // generic
     string instanceName;
     long int instanceSize;
     string algoClass;
+    // II and piped VND
     string pivot;
     string neighborhood;
     string init;
+    // ILS
+    string localSearch;
+    string perturbation;
+    int perturbNbr;
+
+    // memetic;
+    int populationSize;
+    int mutationRate;
+
     string configuration;
     string bestKnown;
     long long int bestKnowed;
@@ -34,6 +44,7 @@ private:
     vector<string> split(const string &s, char delimiter);
     //parse the configuration string
     void parseConfiguration(string config);
+    void printOut();
 public:
     Output();
     ~Output();

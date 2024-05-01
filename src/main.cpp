@@ -79,7 +79,7 @@ void run(Instance &instance, Configuration &configuration){
     cout << "Final solution cost: " << instance.computeCost(finalSolution) << endl;
 
 
-    /*Output output;
+    Output output;
     output.setUp(instance.getInstanceName(),
                   instance.getPSize(),
                   configuration.getAlgoClass(),
@@ -87,7 +87,7 @@ void run(Instance &instance, Configuration &configuration){
                   instance.computeCost(finalSolution),
                   time);
 
-    output.printOutput();*/
+    output.printOutput();
 
 
 
@@ -169,7 +169,7 @@ Memetic setMemetic(Instance &instance, Configuration &config){
     Memetic memetic;
     memetic.configure(config.getPopulationSize(),
                       config.getMutationRate(),
-                      config.getMaxGeneration(),
+                      config.getMaxTime(),
                       config.initPopulation,
                       config.recombine,
                       config.mutate,

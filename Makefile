@@ -75,12 +75,12 @@ test_vnd:
 	#./lop -i assets/instances/N-tiw56r72_250 --vnd --TEI
 
 test_genetic:
-	./lop -i assets/instances/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --gen 10
+	./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
 	#./lop -i assets/instances/N-tiw56r72_150 --memetic --neighbour transpose --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --gen 10
 	#./lop -i assets/instances/N-tiw56r72_150 --memetic --neighbour insert --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --gen 10
 
 test_ils:
-	./lop -i assets/instances/N-tiw56r72_150 --ils --init cw --neighbour insert --perturb exchange --time 5.0 --moves 3
+	./lop -i assets/size_150/N-tiw56r72_150 --ils  --neighbour insert --perturb exchange --time 22.41135 --moves 3 --init cw
 	#./lop -i assets/instances/N-tiw56r72_150 --ils --neighbour transpose --rate 0.1 --gen 10
 	#./lop -i assets/instances/N-tiw56r72_150 --ils --neighbour insert --rate 0.1 --gen 10
 

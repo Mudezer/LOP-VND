@@ -7,19 +7,19 @@
 
 Population recombination(Instance& instance, Population population, int populationSize){
     Population newPop;
+    int recombIteration = 0;
     // TODO: change this to random selection of parents to recombinate
-    for(int i =0; i<populationSize; i++){
+    while(newPop.size() < populationSize){
+
         Population newChilds = twoPointCrossover(
                         instance,
                         population[rand() % (populationSize/4)],
                         population[rand() % (populationSize)]
         );
-
-        newPop.push_back(newChilds[0]);
-        newPop.push_back(newChilds[1]);
+        newPop.insert(newPop.end(),(newChilds[0]));
+        newPop.insert(newPop.end(),(newChilds[1]));
 
     }
-
     return newPop;
 }
 

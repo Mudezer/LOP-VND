@@ -84,7 +84,7 @@ void Output::printOutput(){
     string path_to_output = "results/" + this->algoClass + "/" + "res_"+ this->algoClass + ".csv";
     cout << "Output file: " << path_to_output << endl;
 
-
+    /*
     ofstream file;
     file.open(path_to_output, ios::app);
 
@@ -92,15 +92,26 @@ void Output::printOutput(){
         cerr << "File could not be opened for writing." << endl;
     }
 
+    if((this->algoClass == "vnd") || (this->algoClass == "iter")){
     // instance name, configuration,algoClass, pivot, neighboor, init , best cost, best known, elapsed time, relative deviation
     file << this->instanceName << "," << this->configuration << "," << this->instanceSize << "," << this->algoClass << "," << this->pivot << "," << this->neighborhood << "," <<
     this->init << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << ","  << this->relativeDeviation << endl;
 
-    file.close();
+    }
+    else if(this->algoClass == "ils"){
 
+    }
+    else if(this->algoClass == "memetic"){
+
+    }
+
+
+    file.close();*/
 
 
 }
+
+
 
 void Output::parseConfiguration(std::string config) {
 
@@ -115,6 +126,12 @@ void Output::parseConfiguration(std::string config) {
         this->pivot = splitResults[1];
         this->neighborhood = splitResults[3];
         this->init = splitResults[2];
+    }
+    else if(splitResults[0] == "ils"){
+
+    }
+    else if(splitResults[0] == "memetic"){
+
     }
     else{
         cerr << "Unknown configuration" << endl;

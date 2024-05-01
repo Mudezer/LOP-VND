@@ -7,10 +7,11 @@
 
 Population rankSelection(Instance& instance, Population population, int populationSize){
     Population selected;
+    long long int cost = 0;
 
     vector<pair<long long int, Candidate>> costNCandidates;
     for(auto& candidate : population){
-        long long int cost = instance.computeCost(candidate);
+        cost = instance.computeCost(candidate);
         costNCandidates.emplace_back(cost, candidate);
     }
 

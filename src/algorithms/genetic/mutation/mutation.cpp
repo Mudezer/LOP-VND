@@ -6,8 +6,8 @@
 
 
 Candidate randomExchange(Instance& instance, Candidate candidate){
-    int i = rand() % candidate.size()+1;
-    int j = rand() % candidate.size()+1;
+    int i = rand() % candidate.size();
+    int j = rand() % candidate.size();
 
     if(i > j)
         swap(i, j);
@@ -18,16 +18,17 @@ Candidate randomExchange(Instance& instance, Candidate candidate){
 }
 
 Population randomMutation(Instance& instance, Population population, float mutationRate){
-    Population mutated;
+    Population mutated = vector<Candidate> (population.size());
 
     for(int i =0; i<population.size(); i++){
         float mutation = (float) (rand() % 100) / (float) 100;
         if (mutation <= mutationRate){
-            mutated.push_back(randomExchange(instance, population[i]));
+            mutated[i] = randomExchange(instance, population[i]);
         }else{
-            mutated.push_back(population[i]);
+            mutated[i]=population[i];
         }
     }
+
 
     return mutated;
 }

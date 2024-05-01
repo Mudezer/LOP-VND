@@ -6,6 +6,8 @@
 #define LOP_VND_UTILITIES_H
 
 #include <vector>
+#include <iostream>
+
 
 using namespace std;
 typedef vector<vector<long int>> Matrix;

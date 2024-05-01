@@ -36,7 +36,6 @@ void Configuration::parseArguments(int argc, char **argv){
             {"rank-mut", no_argument, nullptr, 'z'},
             {"pop", required_argument, nullptr, 'p'},
             {"rate", required_argument, nullptr, 'n'},
-            {"gen", required_argument, nullptr, 'o'},
 
             // help
             {"help", no_argument, nullptr, 'h'},
@@ -78,7 +77,7 @@ void Configuration::parseArguments(int argc, char **argv){
                 this->algoClass = "memetic";
                 this->configuration += "memetic_";
                 this->initPopulation = randomPopulationInitialisation;
-                this->configuration += "random_init_";
+                this->configuration += "random-init_";
                 cout << "Running Memetic algorithm\n" << endl;
                 break;
             case 'f':
@@ -101,17 +100,17 @@ void Configuration::parseArguments(int argc, char **argv){
                 break;
             case 'q':
                 this->recombine = recombination;
-                this->configuration += "rank_comb_";
+                this->configuration += "rank-comb_";
                 cout << "Rank based recombination\n" << endl;
                 break;
             case 'w':
                 this->select = rankSelection;
-                this->configuration += "rank_select_";
+                this->configuration += "rank-select_";
                 cout << "Rank based selection\n" << endl;
                 break;
             case 'z':
                 this->mutate = randomMutation;
-                this->configuration += "rank_mut_";
+                this->configuration += "rank-mut_";
                 cout << "Rank based mutation\n" << endl;
                 break;
             case 'p':
@@ -123,11 +122,6 @@ void Configuration::parseArguments(int argc, char **argv){
                 this->mutationRate = atof(optarg);
                 this->configuration += "mut_" + to_string(this->mutationRate) + "_";
                 cout << "Mutation rate: " << this->mutationRate << "\n" << endl;
-                break;
-            case 'o':
-                this->maxGeneration = atoi(optarg);
-                this->configuration += "gen_" + to_string(this->maxGeneration) + "_";
-                cout << "Max generation: " << this->maxGeneration << "\n" << endl;
                 break;
             case 'h':
             case '?':
@@ -277,15 +271,15 @@ void Configuration::setUpVND(string opt) {
 void Configuration::setPerturbation(string opt){
     if(opt == "tranpose"){
         this->perturbation = transpose;
-        this->configuration += "perturb_transpose_";
+        this->configuration += "perturb-transpose_";
     }
     else if(opt == "exchange"){
         this->perturbation = exchange;
-        this->configuration += "perturb_exchange_";
+        this->configuration += "perturb-exchange_";
     }
     else if(opt == "insert"){
         this->perturbation = insert;
-        this->configuration += "perturb_insert_";
+        this->configuration += "perturb-insert_";
     }
     else{
         cerr << "Perturbation not recognized." << endl;

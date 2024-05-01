@@ -91,18 +91,31 @@ Candidate IterativeLocalSearch::subsidiaryLocalSearch(Instance& instance, Candid
 Candidate IterativeLocalSearch::runILS(Instance& instance){
     Time start = Clock::now();
     Candidate solution = computeInitialSolution(instance);
+
+    cout << "Initial solution: " << endl;
+    for (int i = 0; i < solution.size(); i++) {
+        cout << solution[i] << " ";
+    }
+    cout << endl;
+
+    cout <<"Initial solution cost: " << instance.computeCost(solution) << endl;
+
     Candidate bestSolution = subsidiaryLocalSearch(instance, solution);
+
     updateHistory(bestSolution);
     long long int bestCost = instance.computeCost(bestSolution);
+    cout << "Initial best cost: " << bestCost << endl;
     long long int newCost;
     do{
         solution = randomPerturbation(bestSolution, perturbNbr);
         solution = subsidiaryLocalSearch(instance, bestSolution);
         updateHistory(solution);
-        if(((newCost = instance.computeCost(solution)) < bestCost) && !isInHistory(solution)){
+//        cout << "new cost: " << instance.computeCost(solution) << endl;
+        if(((newCost = instance.computeCost(solution)) > bestCost) && !isInHistory(solution)){
             bestCost = newCost;
             bestSolution = solution;
             updateHistory(bestSolution);
+            cout << "new best cost: " << bestCost << endl;
         }
 
     }while(!termination(start, Clock::now()));

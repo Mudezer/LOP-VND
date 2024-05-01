@@ -8,6 +8,8 @@
 
 typedef vector<int> Index;
 
+
+
 Candidate makeValid(Candidate child){
     vector<bool> used(child.size(), false);
     Index duplicates_idx;
@@ -15,7 +17,7 @@ Candidate makeValid(Candidate child){
 
     for(int i=0; i<child.size(); i++){
         if(used[child[i]]){
-            duplicates_idx.push_back(i);
+            duplicates_idx.insert(duplicates_idx.end(),i);
         }else{
             used[child[i]] = true;
         }
@@ -45,8 +47,14 @@ Population twoPointCrossover(Instance& instance, Candidate parent1, Candidate pa
     Candidate child1;
     Candidate child2;
 
-    int pivot1 = rand() % parent1.size()+1;
-    int pivot2 = rand() % parent1.size()+1;
+
+
+    int pivot1 = rand() % parent1.size();
+    int pivot2 = rand() % parent1.size();
+
+    while(pivot1 == pivot2){
+        pivot2 = rand() % parent1.size();
+    }
 
     if(pivot1 > pivot2){
         swap(pivot1, pivot2);
@@ -72,7 +80,6 @@ Population twoPointCrossover(Instance& instance, Candidate parent1, Candidate pa
 
     childs.push_back(child1);
     childs.push_back(child2);
-
 
     return childs;
 }

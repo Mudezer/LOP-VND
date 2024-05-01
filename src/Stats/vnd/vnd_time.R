@@ -30,20 +30,14 @@ colnames(merged.df)[which(names(merged.df) == "BestKnown.y")] <- "BestKnown"
 Deviation <- 100*(merged.df$BestKnown - merged.df$BestCost)/merged.df$BestKnown
 merged.df <- cbind(merged.df, Deviation)
 
-# print(merged.df)
+print(merged.df)
 
-### compute the total time and average relative deviation of each algorithm
-total.time <- merged.df %>%
-  group_by(Algorithm,Size) %>%
-  summarise(Time = sum(Time))
-average.relative.deviation <- merged.df %>%
-  group_by(Algorithm,Size) %>%
-  summarise(Deviation = mean(Deviation))
+filtered.df <- df %>% filter(Size == 150)
 
-new.df <- merge(total.time, average.relative.deviation, by=c("Algorithm","Size"))
+average_time_df <- filtered.df %>%
+  group_by(Instance) %>%
+  summarise(AvgTime = mean(Time)*100)
 
-sorted.df <- new.df %>% arrange(Size)
+print(average_time_df)
 
-print(sorted.df)
-
-# write.table(sorted.df, file="src/Stats/outputs/vnd/general_vnd.csv", row.names = FALSE, quote=FALSE)
+write.table(average_time_df, file="src/Stats/outputs/vnd/vnd_time.csv", row.names = FALSE, quote=FALSE, sep=",")
