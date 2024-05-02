@@ -75,7 +75,6 @@ void run(Instance &instance, Configuration &configuration){
     for (long i : finalSolution)
         cout << i << " ";
     cout << endl;
-
     cout << "Final solution cost: " << instance.computeCost(finalSolution) << endl;
 
 
@@ -156,8 +155,8 @@ IterativeLocalSearch setILS(Instance &instance, Configuration &config){
                     config.getPerturbNbr(),
                     config.computeInit,
                     config.perturbation,
-                    config.computeNeighborhood,
-                    config.computeDelta
+                    config.computeNeighborhoods,
+                    config.computeDeltas
                   );
     return ils;
 

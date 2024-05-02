@@ -7,8 +7,6 @@
 
 Population recombination(Instance& instance, Population population, int populationSize){
     Population newPop;
-    int recombIteration = 0;
-    // TODO: change this to random selection of parents to recombinate
     while(newPop.size() < populationSize){
 
         Population newChilds = twoPointCrossover(

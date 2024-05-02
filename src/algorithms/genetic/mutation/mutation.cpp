@@ -9,6 +9,9 @@ Candidate randomExchange(Instance& instance, Candidate candidate){
     int i = rand() % candidate.size();
     int j = rand() % candidate.size();
 
+    while(i == j)
+        j = rand() % candidate.size();
+
     if(i > j)
         swap(i, j);
 

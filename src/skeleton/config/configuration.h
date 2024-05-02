@@ -109,7 +109,7 @@ public:
     void setUpVND(string opt);
 
     // sets up the piped ils algorithm
-    void setUpILS(string opt);
+    void setUpILSSequence(string opt);
     void setPerturbation(string opt);
     Candidate (*perturbation) (Candidate&, int, int);
 

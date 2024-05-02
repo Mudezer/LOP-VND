@@ -47,12 +47,12 @@ vector<long int> VariableNeighbourDescent::runVND(Instance &instance, vector<lon
         }
     }
 
-    cout << "Best solution: " << endl;
-    for (long i : bestS)
-        cout << i << " ";
-    cout << endl;
-
-    cout << "Best solution cost: " << instance.computeCost(bestS) << endl;
+//    cout << "Best solution: " << endl;
+//    for (long i : bestS)
+//        cout << i << " ";
+//    cout << endl;
+//
+//    cout << "Best solution cost: " << instance.computeCost(bestS) << endl;
 
     return bestS;
 

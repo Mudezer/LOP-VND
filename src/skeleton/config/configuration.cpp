@@ -17,7 +17,7 @@ void Configuration::parseArguments(int argc, char **argv){
             // algo type
             {"iter", no_argument, nullptr, 't'},
             {"vnd", required_argument, nullptr, 'v'},
-            {"ils", no_argument, nullptr, 'l'},
+            {"ils", required_argument, nullptr, 'l'},
             {"memetic", no_argument, nullptr, 'm'},
 
             // Simple VND variables
@@ -70,6 +70,7 @@ void Configuration::parseArguments(int argc, char **argv){
                 this->algorithmType = ILS;
                 this->algoClass = "ils";
                 this->configuration += "ils_";
+                setUpILSSequence(optarg);
                 cout << "Running ILS algorithm\n" << endl;
                 break;
             case 'm':
@@ -255,6 +256,19 @@ void Configuration::setUpVND(string opt) {
     this->computeInit = createCWHeuristicSolution;
     this->configuration += "cw_";
 
+    if(opt == "TIE"){
+        this -> computeNeighborhoods = {transpose, insert, exchange};
+        this -> computeDeltas = {computeDeltaTranspose, computeDeltaInsert, computeDeltaExchange};
+        this -> configuration += "TIE";
+    }
+    else if(opt == "TEI"){
+        this -> computeNeighborhoods = {transpose, exchange, insert};
+        this -> computeDeltas = {computeDeltaTranspose, computeDeltaExchange, computeDeltaInsert};
+        this -> configuration += "TEI";
+    }
+}
+
+void Configuration::setUpILSSequence(string opt){
     if(opt == "TIE"){
         this -> computeNeighborhoods = {transpose, insert, exchange};
         this -> computeDeltas = {computeDeltaTranspose, computeDeltaInsert, computeDeltaExchange};
