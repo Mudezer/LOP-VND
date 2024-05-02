@@ -95,9 +95,11 @@ void Configuration::parseArguments(int argc, char **argv){
                 break;
             case 's':
                 this->maxTime = atof(optarg);
+                this->configuration += "time_" + to_string(this->maxTime) + "_";
                 break;
             case 'k':
                 this->perturbNbr = atoi(optarg);
+                this->configuration += "moves_" + to_string(this->perturbNbr) + "_";
                 break;
             case 'q':
                 this->recombine = recombination;
@@ -272,12 +274,12 @@ void Configuration::setUpILSSequence(string opt){
     if(opt == "TIE"){
         this -> computeNeighborhoods = {transpose, insert, exchange};
         this -> computeDeltas = {computeDeltaTranspose, computeDeltaInsert, computeDeltaExchange};
-        this -> configuration += "TIE";
+        this -> configuration += "TIE_";
     }
     else if(opt == "TEI"){
         this -> computeNeighborhoods = {transpose, exchange, insert};
         this -> computeDeltas = {computeDeltaTranspose, computeDeltaExchange, computeDeltaInsert};
-        this -> configuration += "TEI";
+        this -> configuration += "TEI_";
     }
 }
 

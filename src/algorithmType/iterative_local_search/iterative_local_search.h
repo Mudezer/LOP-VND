@@ -30,9 +30,9 @@ private:
     vector<Candidate (*) (Candidate&, int, int)> neighbourOperations;
     vector<long long int (*) (Matrix&, Candidate&, int, int)> computeDeltas;
 
-    Candidate subsidiaryLocalSearch(Instance& instance, Candidate& candidate);
-    Candidate randomPerturbation(Candidate& candidate, int nbrOfMoves);
-    Candidate acceptanceCriterion(Instance&, Candidate&, Candidate&);
+    Candidate subsidiaryLocalSearch(Instance& instance, Candidate candidate);
+    Candidate randomPerturbation(Candidate candidate, int nbrOfMoves);
+    Candidate acceptanceCriterion(Instance&, Candidate, Candidate);
     bool termination(Time start, Time actual);
 
 public:
@@ -43,9 +43,7 @@ public:
             Candidate (*perturbation) (Candidate&, int, int),
             vector<Candidate (*) (Candidate&, int, int)> neighbourOperations,
             vector<long long int (*) (Matrix&, Candidate&, int, int)> computeDeltas
-
     );
-
     Candidate runILS(Instance& instance);
 };
 

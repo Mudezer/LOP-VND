@@ -29,7 +29,7 @@ void IterativeLocalSearch::configure(
 }
 
 
-Candidate IterativeLocalSearch::randomPerturbation(Candidate &candidate, int nbrOfMoves) {
+Candidate IterativeLocalSearch::randomPerturbation(Candidate candidate, int nbrOfMoves) {
     Candidate backUp = candidate;
     Candidate newCandidate;
 
@@ -52,21 +52,21 @@ bool IterativeLocalSearch::termination(Time start, Time actual){
     return ((double) duration.count()) / 1000000 > this->maxTime;
 }
 
-Candidate IterativeLocalSearch::acceptanceCriterion(Instance& instance, Candidate& candidate1, Candidate& candidate2 ){
+Candidate IterativeLocalSearch::acceptanceCriterion(Instance& instance, Candidate candidate1, Candidate candidate2 ){
     long long int cost1 = instance.computeCost(candidate1);
     long long int cost2 = instance.computeCost(candidate2);
 
-    if(cost1 > cost2){
-        return candidate1;
-    }else if(cost2 > cost1){
+    if (cost2 > cost1)
         return candidate2;
-    }
+    else
+        return candidate1;
 
-    return candidate1;
+
+
 }
 
 
-Candidate IterativeLocalSearch::subsidiaryLocalSearch(Instance& instance, Candidate& candidate){
+Candidate IterativeLocalSearch::subsidiaryLocalSearch(Instance& instance, Candidate candidate){
     return localSearch.runVND(instance, candidate);
 }
 
@@ -83,7 +83,7 @@ Candidate IterativeLocalSearch::runILS(Instance& instance){
     cout << endl;
     cout << "Initial solution cost: " << bestCost << endl;
 
-
+    int iteration = 0;
     Candidate newSolution = vector<long int>(instance.getPSize());
 
     do{
@@ -92,7 +92,14 @@ Candidate IterativeLocalSearch::runILS(Instance& instance){
 
 
         bestSolution = acceptanceCriterion(instance, bestSolution, newSolution);
+
     }while(!termination(start, Clock::now()));
+
+    cout << "Best solution: " << endl;
+    for (long i : bestSolution)
+        cout << i << " ";
+    cout << endl;
+    cout << "Best solution cost: " << instance.computeCost(bestSolution) << endl;
 
 
     return bestSolution;
