@@ -1,0 +1,6 @@
+N-be75eec_150,memetic_random-init_exchange_rank-comb_rank-select_rank-mut_pop_10_mut_0.100000_time_22.072700_,150,memetic,exchange,0.1,random-init,10,3449523,3482828,22.1228,0
+N-be75eec_150,memetic_random-init_insert_rank-comb_rank-select_rank-mut_pop_10_mut_0.100000_time_22.072700_,150,memetic,insert,0.1,random-init,10,3426959,3482828,22.0739,1
+N-be75eec_150,memetic_random-init_transpose_rank-comb_rank-select_rank-mut_pop_10_mut_0.100000_time_22.072700_,150,memetic,transpose,0.1,random-init,10,3343890,3482828,22.0731,3
+N-be75np_150,memetic_random-init_insert_rank-comb_rank-select_rank-mut_pop_10_mut_0.100000_time_22.846850_,150,memetic,insert,0.1,random-init,10,7092031,7174325,22.8573,1
+N-be75np_150,memetic_random-init_transpose_rank-comb_rank-select_rank-mut_pop_10_mut_0.100000_time_22.846850_,150,memetic,transpose,0.1,random-init,10,7025890,7174325,22.8477,2
+N-be75oi_150,memetic_random-init_exchange_rank-comb_rank-select_rank-mut_pop_10_mut_0.100000_time_31.828150_,150,memetic,exchange,0.1,random-init,10,2230273,2246534,31.8631,0

@@ -1,5 +1,5 @@
 cc = g++
-CFLAGS = -std=c++17 -O3 -Wall #-v
+CFLAGS = -std=c++17 -O3 -Wall #-v #-g
 
 all: skeleton init pivots operations algorithms memetic
 	$(cc) $(CFLAGS)   \
@@ -81,16 +81,8 @@ test_genetic:
 
 test_ils:
 	./lop -i assets/size_150/N-tiw56r72_150 --ils TEI --perturb exchange --time 22.41135 --moves 2 --init cw
-	#./lop -i assets/instances/N-tiw56r72_150 --ils --neighbour transpose --rate 0.1 --gen 10
+	#./lop -i assets/size_150/N-tiw56r72_150 --ils TEI --perturb exchange --time 22.41135 --moves 2 --init cw
 	#./lop -i assets/instances/N-tiw56r72_150 --ils --neighbour insert --rate 0.1 --gen 10
-
-kek:
-	$(cc) $(CFLAGS) -o test/test test/test.cpp
-	#$(cc) $(CFLAGS) -o test/test2 test/test2.cpp
-
-kek1:
-	./test/test
-	#./test/test2
 
 
 clean:

@@ -2,13 +2,13 @@
 library(dplyr)
 
 rm(list=ls())
-df <- read.csv("results/iter/res_iter.csv", sep=",", header = FALSE)
+df <- read.csv("results/ils/res_ils.csv", sep=",", header = FALSE)
 df <- data.frame(df)
-colnames(df) <- c("Instance", "Algorithm","Size","AlgoClass","Pivot",
-                  "Neighbour","Init","BestCost","BestKnown","Time","RelativeDev")
+colnames(df) <- c("Instance", "Algorithm", "size", "AlgoClass", "Sequence", "Perturbation","Init",
+                  "Moves","BestCost", "BestKnown","Time","RelativeDev")
 # print(df)
 
-best.known <- read.table("assets/best_known/best_known.txt")
+best.known <- read.table("assets/best_known/best_known_150.txt")
 best.known <- data.frame(best.known)
 colnames(best.known) <- c("Instance", "BestKnown")
 # print(best.known)
@@ -16,7 +16,8 @@ colnames(best.known) <- c("Instance", "BestKnown")
 # ensure that the columns are numeric
 df$Time <- as.numeric(df$Time)
 df$RelativeDev <- as.numeric(df$RelativeDev)
-df$Size <- as.numeric(df$Size)
+df$size <- as.numeric(df$size)
+df$Moves <- as.numeric(df$Moves)
 df$BestCost <- as.numeric(df$BestCost)
 df$BestKnown <- as.numeric(df$BestKnown)
 best.known$BestKnown <- as.numeric(best.known$BestKnown)
@@ -30,21 +31,5 @@ colnames(merged.df)[which(names(merged.df) == "BestKnown.y")] <- "BestKnown"
 Deviation <- 100*(merged.df$BestKnown - merged.df$BestCost)/merged.df$BestKnown
 merged.df <- cbind(merged.df, Deviation)
 
+
 # print(merged.df)
-
-### compute the total time and average relative deviation of each algorithm
-total.time <- merged.df %>%
-  group_by(Algorithm,Size) %>%
-  summarise(Time = sum(Time))
-average.relative.deviation <- merged.df %>%
-  group_by(Algorithm,Size) %>%
-  summarise(Deviation = mean(Deviation))
-
-new.df <- merge(total.time, average.relative.deviation, by=c("Algorithm","Size"))
-
-sorted.df <- new.df %>% arrange(Size)
-
-print(sorted.df)
-
-### write the results to a csv file
-# write.table(sorted.df, file="src/Stats/outputs/iterative/general_iterative.csv", row.names = FALSE, quote=FALSE)

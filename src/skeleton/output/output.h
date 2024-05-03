@@ -23,13 +23,16 @@ private:
     string neighborhood;
     string init;
     // ILS
+    string vndSequence;
     string localSearch;
     string perturbation;
-    int perturbNbr;
+    int moves;
 
     // memetic;
+    string popInit;
     int populationSize;
-    int mutationRate;
+    float mutationRate;
+    string mutation;
 
     string configuration;
     string bestKnown;

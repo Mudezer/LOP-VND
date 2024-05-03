@@ -287,15 +287,15 @@ void Configuration::setUpILSSequence(string opt){
 void Configuration::setPerturbation(string opt){
     if(opt == "tranpose"){
         this->perturbation = transpose;
-        this->configuration += "perturb-transpose_";
+        this->configuration += "perturb_transpose_";
     }
     else if(opt == "exchange"){
         this->perturbation = exchange;
-        this->configuration += "perturb-exchange_";
+        this->configuration += "perturb_exchange_";
     }
     else if(opt == "insert"){
         this->perturbation = insert;
-        this->configuration += "perturb-insert_";
+        this->configuration += "perturb_insert_";
     }
     else{
         cerr << "Perturbation not recognized." << endl;

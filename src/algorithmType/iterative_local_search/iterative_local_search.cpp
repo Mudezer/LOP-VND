@@ -95,6 +95,8 @@ Candidate IterativeLocalSearch::runILS(Instance& instance){
 
     }while(!termination(start, Clock::now()));
 
+    cout << "Number of iterations: " << iteration << endl<< endl;
+
     cout << "Best solution: " << endl;
     for (long i : bestSolution)
         cout << i << " ";

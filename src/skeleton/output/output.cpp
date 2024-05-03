@@ -84,7 +84,7 @@ void Output::printOutput(){
     string path_to_output = "results/" + this->algoClass + "/" + "res_"+ this->algoClass + ".csv";
     cout << "Output file: " << path_to_output << endl;
 
-    /*
+
     ofstream file;
     file.open(path_to_output, ios::app);
 
@@ -100,13 +100,20 @@ void Output::printOutput(){
     }
     else if(this->algoClass == "ils"){
 
+        file << this->instanceName << "," << this->configuration << "," << this->instanceSize << "," << this->algoClass << "," << this->vndSequence << "," << this->perturbation << "," <<
+        this->init << "," << this->moves << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << ","  << this->relativeDeviation << endl;
+
     }
     else if(this->algoClass == "memetic"){
 
+        file << this->instanceName << "," << this->configuration << "," << this->instanceSize << "," << this->algoClass <<  "," <<  this->mutation << "," << this->mutationRate << "," <<
+        this->popInit << "," << this->populationSize << "," << this->bestCost << "," << this->bestKnown << "," << this->elapsedTime << ","  << this->relativeDeviation << endl;
+
+
     }
 
 
-    file.close();*/
+    file.close();
 
 
 }
@@ -116,6 +123,12 @@ void Output::printOutput(){
 void Output::parseConfiguration(std::string config) {
 
     vector<string> splitResults = split(config, '_');
+
+    cout << "Split results: " << endl;
+    for (int i = 0; i < splitResults.size(); i++) {
+        cout << "i : " << i << " : "<< splitResults[i] << endl;
+    }
+    cout << endl;
 
     if(splitResults[0] == "iter"){
         this->pivot = splitResults[1];
@@ -128,9 +141,17 @@ void Output::parseConfiguration(std::string config) {
         this->init = splitResults[2];
     }
     else if(splitResults[0] == "ils"){
-
+        this->vndSequence = splitResults[1];
+        this->perturbation = splitResults[3];
+        this->moves = stoi(splitResults[7]);
+        this->init = splitResults[8];
     }
     else if(splitResults[0] == "memetic"){
+        this->popInit = splitResults[1];
+        this->mutation = splitResults[2];
+        this->populationSize = stoi(splitResults[7]);
+        this->mutationRate = stof(splitResults[9]);
+
 
     }
     else{
