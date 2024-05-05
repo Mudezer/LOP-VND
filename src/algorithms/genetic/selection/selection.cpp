@@ -4,7 +4,13 @@
 
 #include "../../algorithms.h"
 
-
+/**
+ * Select the best candidates of the population
+ * @param instance
+ * @param population
+ * @param populationSize
+ * @return the selected population
+ */
 Population rankSelection(Instance& instance, Population population, int populationSize){
     Population selected;
     long long int cost = 0;

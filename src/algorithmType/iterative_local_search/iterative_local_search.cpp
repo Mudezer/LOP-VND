@@ -4,7 +4,15 @@
 
 #include "iterative_local_search.h"
 
-
+/**
+ * Constructor: Configure the different parameters of the iterated local search algorithm
+ * @param maxTime
+ * @param perturbNbr
+ * @param computeInitialSolution
+ * @param perturbation
+ * @param neighbourOperations
+ * @param computeDeltas
+ */
 void IterativeLocalSearch::configure(
         double maxTime,
         int perturbNbr,
@@ -28,7 +36,12 @@ void IterativeLocalSearch::configure(
 
 }
 
-
+/**
+ * Apply a random perturbation to a candidate
+ * @param candidate
+ * @param nbrOfMoves
+ * @return the perturbed candidate
+ */
 Candidate IterativeLocalSearch::randomPerturbation(Candidate candidate, int nbrOfMoves) {
     Candidate backUp = candidate;
     Candidate newCandidate;
@@ -46,12 +59,25 @@ Candidate IterativeLocalSearch::randomPerturbation(Candidate candidate, int nbrO
     return newCandidate;
 }
 
+/**
+ * Check if the termination condition is met
+ * @param starting time
+ * @param actual time
+ * @return true if the termination condition is met, false otherwise
+ */
 bool IterativeLocalSearch::termination(Time start, Time actual){
     auto duration = chrono::duration_cast<chrono::microseconds>(actual - start);
 
     return ((double) duration.count()) / 1000000 > this->maxTime;
 }
 
+/**
+ * Apply the acceptance criterion to two candidates
+ * @param instance
+ * @param candidate1
+ * @param candidate2
+ * @return the best candidate
+ */
 Candidate IterativeLocalSearch::acceptanceCriterion(Instance& instance, Candidate candidate1, Candidate candidate2 ){
     long long int cost1 = instance.computeCost(candidate1);
     long long int cost2 = instance.computeCost(candidate2);
@@ -60,18 +86,26 @@ Candidate IterativeLocalSearch::acceptanceCriterion(Instance& instance, Candidat
         return candidate2;
     else
         return candidate1;
-
-
-
 }
 
-
+/**
+ * Apply the local search to all the individuals in the population
+ *
+ * @param instance
+ * @param population
+ * @return the optimized population
+ */
 Candidate IterativeLocalSearch::subsidiaryLocalSearch(Instance& instance, Candidate candidate){
     return localSearch.runVND(instance, candidate);
 }
 
 
-
+/**
+ * Run the iterated local search algorithm
+ *
+ * @param instance
+ * @return the best candidate found
+ */
 Candidate IterativeLocalSearch::runILS(Instance& instance){
     Time start = Clock::now();
     Candidate solution = computeInitialSolution(instance);

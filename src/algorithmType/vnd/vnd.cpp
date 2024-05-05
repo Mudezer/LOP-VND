@@ -58,6 +58,11 @@ vector<long int> VariableNeighbourDescent::runVND(Instance &instance, vector<lon
 
 }
 
+/**
+ * run the VND algorithm with the following instance
+ * @param instance
+ * @return the best solution found
+ */
 vector<long int> VariableNeighbourDescent::runVND(Instance &instance){
     vector<long int> s = computeInitialSolution(instance);
     cout << "Initial solution: " << endl;

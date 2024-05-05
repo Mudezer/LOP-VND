@@ -4,7 +4,19 @@
 
 #include "memetic.h"
 
-
+/**
+ * Constructor: Configure the different parameters of the memetic algorithm
+ *
+ * @param populationSize
+ * @param mutationRate
+ * @param maxTime
+ * @param computeInitialPopulation
+ * @param recombination
+ * @param mutation
+ * @param selection
+ * @param neighbourOperation
+ * @param computeDelta
+ */
 void Memetic::configure(
         int populationSize,
         float mutationRate,
@@ -35,6 +47,13 @@ void Memetic::configure(
             );
 }
 
+/**
+ * Apply the local search to all the individuals in the population
+ *
+ * @param instance
+ * @param population
+ * @return the optimized population
+ */
 Population Memetic::subsidiaryLocalSearch(Instance &instance, Population population) {
     Population newPop = vector<Candidate> (population.size());
 
@@ -45,17 +64,29 @@ Population Memetic::subsidiaryLocalSearch(Instance &instance, Population populat
     return newPop;
 }
 
+/**
+ * Check if the termination condition is met
+ *
+ * @param starting time
+ * @param actual time
+ * @return true if the termination condition is met, false otherwise
+ */
 bool Memetic::termination(Time start, Time actual){
     auto duration = chrono::duration_cast<chrono::microseconds>(actual - start);
 
     return ((double) duration.count()) / 1000000 > this->maxTime;
 }
 
-
+/**
+ * Run the memetic algorithm
+ *
+ * @param instance
+ * @return the best candidate found
+ */
 Candidate Memetic::runMemetic(Instance& instance){
 
 
-    Time start = Clock::now();
+
     Population parents = computeInitialPopulation(instance, populationSize); // SP
     parents = subsidiaryLocalSearch(instance, parents);
 
@@ -64,6 +95,7 @@ Candidate Memetic::runMemetic(Instance& instance){
     Population mutated;
     int iteration = 0;
 
+    Time start = Clock::now();
     do {
         children = recombination(instance, parents, populationSize); // SPR
         children = subsidiaryLocalSearch(instance, children);

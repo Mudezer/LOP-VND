@@ -4,6 +4,12 @@
 
 #include "../../algorithms.h"
 
+/**
+ * Apply a random mutation to a candidate
+ * @param instance
+ * @param candidate
+ * @return the mutated candidate
+ */
 
 Candidate randomExchange(Instance& instance, Candidate candidate){
     int i = rand() % candidate.size();
@@ -20,6 +26,13 @@ Candidate randomExchange(Instance& instance, Candidate candidate){
     return candidate;
 }
 
+/**
+ * Apply a random mutation to the population
+ * @param instance
+ * @param population
+ * @param mutationRate
+ * @return the mutated population
+ */
 Population randomMutation(Instance& instance, Population population, float mutationRate){
     Population mutated = vector<Candidate> (population.size());
 

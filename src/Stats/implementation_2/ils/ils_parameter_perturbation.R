@@ -31,41 +31,37 @@ colnames(merged.df)[which(names(merged.df) == "BestKnown.y")] <- "BestKnown"
 Deviation <- 100*(merged.df$BestKnown - merged.df$BestCost)/merged.df$BestKnown
 merged.df <- cbind(merged.df, Deviation)
 
-
 # print(merged.df)
 
-
-
 ### perturbation study
-
-df_subset <- merged.df[, c("Instance", "Perturbation", "BestCost")]
+df_subset <- merged.df[, c("Instance", "Perturbation", "Deviation")]
 
 # Split the data frame by perturbation type
 list_df_perturbations <- split(df_subset, df_subset$Perturbation)
 
 # You can access each group using the perturbation type as the key
-df_perturbation1 <- list_df_perturbations[["exchange"]]  # Replace 1 with the actual perturbation name if known
-df_perturbation2 <- list_df_perturbations[["insert"]]  # Replace 2 with the actual perturbation name if known
+df_perturbation1 <- list_df_perturbations[["exchange"]]
+df_perturbation2 <- list_df_perturbations[["insert"]]
 
+# Merge the two data frames by the 'Instance' column
 perturbated <- merge(df_perturbation1, df_perturbation2, by="Instance")
 perturbated <- perturbated %>% select(-Perturbation.x, -Perturbation.y)
-# df <- df %>% select(-ColumnName)
 colnames(perturbated) <- c("Instance", "Exchange", "Insert")
 
 # Calculate the mean of the 'Exchange' column
-mean_exchange <- mean(perturbated$Exchange, na.rm = TRUE)  # na.rm = TRUE removes NA values before calculating the mean
+mean_exchange <- mean(perturbated$Exchange, na.rm = TRUE)
 
 # Calculate the mean of the 'Insert' column
-mean_insert <- mean(perturbated$Insert, na.rm = TRUE)  # na.rm = TRUE removes NA values before calculating the mean
+mean_insert <- mean(perturbated$Insert, na.rm = TRUE)
 
-# Create a new data frame with these means
+# Create a new data frame with these means : summary of the perturbation study
 summ <- data.frame(Exchange = mean_exchange, Insert = mean_insert)
 
 print(perturbated)
 print(summ)
 
-# write.table(perturbated, file="src/Stats/outputs/ils/perturbation_study_instances.csv", row.names = FALSE, quote=FALSE)
-# write.table(summ, file="src/Stats/outputs/ils/perturbation_study_summary.csv", row.names = FALSE, quote=FALSE)
+write.table(perturbated, file="src/Stats/outputs/ils/perturbation_study_instances.csv",sep = ",", row.names = FALSE, quote=FALSE)
+write.table(summ, file="src/Stats/outputs/ils/perturbation_study_summary.csv",sep = ",", row.names = FALSE, quote=FALSE)
 
 
 

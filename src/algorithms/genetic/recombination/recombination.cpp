@@ -4,7 +4,13 @@
 
 #include "../../algorithms.h"
 
-
+/**
+ * Apply a population recombination to the population
+ * @param instance
+ * @param population
+ * @param populationSize
+ * @return the new population
+ */
 Population recombination(Instance& instance, Population population, int populationSize){
     Population newPop;
     while(newPop.size() < populationSize){

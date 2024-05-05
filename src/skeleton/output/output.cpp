@@ -8,6 +8,15 @@ Output::Output(){}
 
 Output::~Output(){}
 
+/**
+ * Set up the output object with the necessary information
+ * @param instanceNamed
+ * @param instanceSize
+ * @param algoClass
+ * @param configuration
+ * @param bestCost
+ * @param elapsedTime
+ */
 void Output::setUp(string instanceNamed,
                    long int instanceSize,
                    string algoClass,
@@ -24,6 +33,12 @@ void Output::setUp(string instanceNamed,
     findBestKnown(instanceNamed);
 }
 
+/**
+ * Splits a string into a vector of strings based on a delimiter
+ * @param s
+ * @param delimiter
+ * @return
+ */
 vector<string> Output::split(const string &s, char delimiter) {
     std::vector<std::string> tokens;
     std::string token;
@@ -34,7 +49,10 @@ vector<string> Output::split(const string &s, char delimiter) {
     return tokens;
 }
 
-
+/**
+ * Find the best known value for a given instance
+ * @param instance_name
+ */
 void Output::findBestKnown(string instance_name){
 
     string path_to_bestKnowns = "assets/best_known/best_known.txt";
@@ -67,6 +85,10 @@ void Output::findBestKnown(string instance_name){
     this->relativeDeviation =  (100*(this->bestKnowed-this->bestCost)/this->bestKnowed);
 
 }
+
+/**
+ * Print the output to the console and write it to a file
+ */
 
 void Output::printOutput(){
 
@@ -119,16 +141,19 @@ void Output::printOutput(){
 }
 
 
-
+/**
+ * Parse the configuration string to extract the different parameters
+ * @param config
+ */
 void Output::parseConfiguration(std::string config) {
 
     vector<string> splitResults = split(config, '_');
 
-    cout << "Split results: " << endl;
-    for (int i = 0; i < splitResults.size(); i++) {
-        cout << "i : " << i << " : "<< splitResults[i] << endl;
-    }
-    cout << endl;
+//    cout << "Split results: " << endl;
+//    for (int i = 0; i < splitResults.size(); i++) {
+//        cout << "i : " << i << " : "<< splitResults[i] << endl;
+//    }
+//    cout << endl;
 
     if(splitResults[0] == "iter"){
         this->pivot = splitResults[1];

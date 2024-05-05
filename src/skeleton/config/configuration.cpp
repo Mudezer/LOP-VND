@@ -9,6 +9,11 @@ Configuration::Configuration(){}
 
 Configuration::~Configuration(){}
 
+/**
+ * Parse the command line arguments and set the configuration of the algorithm
+ * @param argc
+ * @param argv
+ */
 void Configuration::parseArguments(int argc, char **argv){
 
     const char* const short_opts = "i:t:v:l:m:f:c:e:q:w:z:p:n:o:r:s:k";
@@ -177,7 +182,10 @@ double Configuration::getMaxTime(){
 int Configuration::getPerturbNbr(){
     return this->perturbNbr;
 }
-
+/**
+ * Set the pivot algorithm type
+ * @param opt
+ */
 void Configuration::setPivotAlgorithm(string opt){
 
     cout << "Pivot algorithm: " << opt << endl;
@@ -201,6 +209,10 @@ void Configuration::setPivotAlgorithm(string opt){
 
 }
 
+/**
+ * Set the neighborhood modification type
+ * @param opt
+ */
 void Configuration::setNeighbourModification(string opt){
     if(opt == "exchange"){
         this->neighborhoodModification = EXCHANGE;
@@ -229,6 +241,10 @@ void Configuration::setNeighbourModification(string opt){
 
 }
 
+/**
+ * Set the initialization type
+ * @param opt
+ */
 void Configuration::setInitialisation(string opt){
 
     if(opt == "cw"){
@@ -250,6 +266,10 @@ void Configuration::setInitialisation(string opt){
 
 }
 
+/**
+ * Set the configuration for the piped VND algorithm
+ * @param opt
+ */
 void Configuration::setUpVND(string opt) {
     this->pivotAlgorithm = FIRST;
     this->computePivot = firstImprovement;
@@ -270,6 +290,10 @@ void Configuration::setUpVND(string opt) {
     }
 }
 
+/**
+ * Set the configuration for the ILS local search
+ * @param opt
+ */
 void Configuration::setUpILSSequence(string opt){
     if(opt == "TIE"){
         this -> computeNeighborhoods = {transpose, insert, exchange};
@@ -283,7 +307,10 @@ void Configuration::setUpILSSequence(string opt){
     }
 }
 
-
+/**
+ * Set the perturbation type
+ * @param opt
+ */
 void Configuration::setPerturbation(string opt){
     if(opt == "tranpose"){
         this->perturbation = transpose;

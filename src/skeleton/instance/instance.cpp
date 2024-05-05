@@ -21,6 +21,9 @@ vector<vector<long int>> Instance::getCostMat(){
     return CostMat;
 }
 
+/**
+ * Allocate memory for the matrix
+ */
 void Instance::allocateMatrix(){
     // resize the columns length
     CostMat.resize(PSize);
@@ -32,7 +35,11 @@ void Instance::allocateMatrix(){
 }
 
 
-
+/**
+ * Compute the cost of a solution
+ * @param s
+ * @return
+ */
 long long int Instance::computeCost(vector<long> &s) {
     int h, k;
     long long int sum = 0;
@@ -43,6 +50,11 @@ long long int Instance::computeCost(vector<long> &s) {
     return (sum);
 }
 
+/**
+ * Compute the attractiveness of a row at a given step
+ * @param s
+ * @return
+ */
 long long int Instance::computeAttractiveness(long step, long row) {
     long int i;
     long long int sum;
@@ -53,7 +65,10 @@ long long int Instance::computeAttractiveness(long step, long row) {
     return sum;
 }
 
-
+/**
+ * Read the instance file
+ * @param filename
+ */
 void Instance::readInstance(const string filename){
 
     ifstream file;

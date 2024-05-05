@@ -5,6 +5,12 @@
 
 #include "../../algorithms.h"
 
+/**
+ * Create a random population for the memetic algorithm
+ * @param instance
+ * @param populationSize
+ * @return a population of random solutions
+ */
 Population randomPopulationInitialisation(Instance& instance, int populationSize){
 
     Population population = vector<Candidate> (populationSize);

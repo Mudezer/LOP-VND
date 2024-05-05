@@ -8,7 +8,8 @@ initialisations = ["--init random", "--init cw"]
 pivot_rules = ["--pivot best", "--pivot first"]
 neighbourhoods = ["--neighbour exchange", "--neighbour insert", "--neighbour transpose"]
 perturbations = ["exchange", "insert", "transpose"]
-
+popSize = [10, 20, 50, 100, 200]
+mutRate = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7, 0.9, 1.0]
 
 
 input = "assets/instances"
@@ -24,6 +25,9 @@ if __name__ == '__main__':
         
         means to run all the different iterative algorithms on
          all the instances in the assets/instances directory
+         
+    note: for the ILS and the memetic algorithm, the timings file is used to determine the time to run the algorithm
+    hence, a timing file with [instance, time] must be provided 
     """
     os.system("make clean")
     os.system("make")
@@ -43,34 +47,34 @@ if __name__ == '__main__':
         instanceNames.extend(filenames)
         break
 
-    # for instance in instanceNames:
-    #     if algotype == "--iter":
-    #         for init in initialisations:
-    #             for pivot in pivot_rules:
-    #                 for neighbour in neighbourhoods:
-    #                     command = f"./lop -i {input}/{instance} {algotype} {pivot} {neighbour} {init}"
-    #                     print(command)
-    #                     os.system(command)
-    #
-    #
-    #     elif algotype == "--vnd":
-    #         for seq in vnd_sequences:
-    #             command = f"./lop -i {input}/{instance} {algotype} {seq}"
-    #             print(command)
-    #             os.system(command)
+    if algotype == "--iter":
+        for instance in instanceNames:
+            for init in initialisations:
+                for pivot in pivot_rules:
+                    for neighbour in neighbourhoods:
+                        command = f"./lop -i {input}/{instance} {algotype} {pivot} {neighbour} {init}"
+                        print(command)
+                        os.system(command)
 
-    if algotype == "--ils":
+
+    elif algotype == "--vnd":
+        for instance in instanceNames:
+            for seq in vnd_sequences:
+                command = f"./lop -i {input}/{instance} {algotype} {seq}"
+                print(command)
+                os.system(command)
+
+    elif algotype == "--ils":
         with open(timings, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 instance = row['Instance']
                 avg_time = row['AvgTime']
 
-                for move in range(2,7):
-                    # Build the command
-                    command = f"./lop -i {input_150}/{instance} --ils TEI --perturb insert --time {avg_time} --moves {move} --init cw"
-                    print(command)
-                    os.system(command)
+                # Build the command
+                command = f"./lop -i {input_150}/{instance} --ils TEI --perturb insert --time {avg_time} --moves 4 --init cw "
+                print(command)
+                os.system(command)
 
 
     elif algotype == "--memetic":
@@ -80,11 +84,8 @@ if __name__ == '__main__':
                 instance = row['Instance']
                 avg_time = row['AvgTime']
 
-                for neighbour in neighbourhoods:
-                    # print(f"{instance}, {avg_time}")
-                    command = f"./lop -i {input_150}/{instance} --memetic {neighbour} --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time {avg_time}"
-                    # ./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
-                    print(command)
-                    os.system(command)
+                command = f"./lop -i {input_150}/{instance} --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 20 --rate 0.3 --time {avg_time}"                    # ./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
+                print(command)
+                os.system(command)
 
 

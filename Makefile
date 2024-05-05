@@ -75,15 +75,15 @@ test_vnd:
 	#./lop -i assets/instances/N-tiw56r72_250 --vnd --TEI
 
 test_genetic:
-	./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
+	./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 1 --time 22,41135
 	#./lop -i assets/instances/N-tiw56r72_150 --memetic --neighbour transpose --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --gen 10
 	#./lop -i assets/instances/N-tiw56r72_150 --memetic --neighbour insert --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --gen 10
 
 test_ils:
-	./lop -i assets/size_150/N-tiw56r72_150 --ils TEI --perturb exchange --time 22.41135 --moves 2 --init cw
+	./lop -i assets/size_150/N-tiw56r72_150 --ils TEI --perturb insert --time 224,1135 --moves 2 --init cw
 	#./lop -i assets/size_150/N-tiw56r72_150 --ils TEI --perturb exchange --time 22.41135 --moves 2 --init cw
 	#./lop -i assets/instances/N-tiw56r72_150 --ils --neighbour insert --rate 0.1 --gen 10
 
 
 clean:
-	rm -f src/*~ bin/*.o lop mourir outest
+	rm -f src/*~ bin/*.o lop

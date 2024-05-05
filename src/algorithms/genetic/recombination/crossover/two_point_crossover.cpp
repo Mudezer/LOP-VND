@@ -9,7 +9,11 @@
 typedef vector<int> Index;
 
 
-
+/**
+ * Make a child valid by replacing duplicates by missing values
+ * @param child
+ * @return the valid child
+ */
 Candidate makeValid(Candidate child){
     vector<bool> used(child.size(), false);
     Index duplicates_idx;
@@ -42,6 +46,13 @@ Candidate makeValid(Candidate child){
 
 }
 
+/**
+ * Apply a two point crossover to two candidates
+ * @param instance
+ * @param parent1
+ * @param parent2
+ * @return the two children
+ */
 Population twoPointCrossover(Instance& instance, Candidate parent1, Candidate parent2){
     Population childs;
     Candidate child1;
