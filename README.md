@@ -96,8 +96,8 @@ Usage: ```./runner.py <instances_directory> <algorithm>```
 - `<algorithm>`: The algorithm you want to run. It can be one of the following:
     - `--iter` : single perturbation iterative improvement
     - `--vnd` : variable neighbor descent
-    - `--ils` : iterated local search
-    - `--memetic` : memetic algorithm
+    - `--ils <max_run_time>` : iterated local search
+    - `--memetic <max_run_time>` : memetic algorithm
 
 Example: run all the simple iterative improvement algorithm on all instances in the `assets/instances` folder:
 

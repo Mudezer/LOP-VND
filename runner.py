@@ -26,18 +26,18 @@ if __name__ == '__main__':
         means to run all the different iterative algorithms on
          all the instances in the assets/instances directory
          
-    note: for the ILS and the memetic algorithm, the timings file is used to determine the time to run the algorithm
-    hence, a timing file with [instance, time] must be provided 
+    note: for the ILS and the memetic algorithm, it is need to specify the max run time to run the algorithm 
     """
     os.system("make clean")
     os.system("make")
 
 
 
-    # input = sys.argv[1]
-    # algotype = sys.argv[1]
+    input = sys.argv[1]
+    algotype = sys.argv[1]
+    time = sys.argv[2]
 
-    algotype = "--memetic"
+    # algotype = "--memetic"
 
     w = os.walk(input)
 
@@ -65,27 +65,44 @@ if __name__ == '__main__':
                 os.system(command)
 
     elif algotype == "--ils":
-        with open(timings, newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                instance = row['Instance']
-                avg_time = row['AvgTime']
-
-                # Build the command
-                command = f"./lop -i {input_150}/{instance} --ils TEI --perturb insert --time {avg_time} --moves 4 --init cw "
-                print(command)
-                os.system(command)
-
+        for instance in instanceNames:
+            command = f"./lop -i {input}/{instance} --ils TEI --perturb insert --time {time} --moves 4 --init cw "
+            print(command)
+            os.system(command)
 
     elif algotype == "--memetic":
-        with open(timings, newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                instance = row['Instance']
-                avg_time = row['AvgTime']
+        for instance in instanceNames:
+            command = f"./lop -i {input}/{instance} --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 20 --rate 0.3 --time {time}"                    # ./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
+            print(command)
+            os.system(command)
 
-                command = f"./lop -i {input_150}/{instance} --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 20 --rate 0.3 --time {avg_time}"                    # ./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
-                print(command)
-                os.system(command)
+    ''''
+    The following part of the code was used to study the different parameters of the ils and the memetic algorithm
+    
+    '''
+
+    # elif algotype == "--ils":
+    #     with open(timings, newline='') as csvfile:
+    #         reader = csv.DictReader(csvfile)
+    #         for row in reader:
+    #             instance = row['Instance']
+    #             avg_time = row['AvgTime']
+    #
+    #             # Build the command
+    #             command = f"./lop -i {input_150}/{instance} --ils TEI --perturb insert --time {avg_time} --moves 4 --init cw "
+    #             print(command)
+    #             os.system(command)
+    #
+    #
+    # elif algotype == "--memetic":
+    #     with open(timings, newline='') as csvfile:
+    #         reader = csv.DictReader(csvfile)
+    #         for row in reader:
+    #             instance = row['Instance']
+    #             avg_time = row['AvgTime']
+    #
+    #             command = f"./lop -i {input_150}/{instance} --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 20 --rate 0.3 --time {avg_time}"                    # ./lop -i assets/size_150/N-tiw56r72_150 --memetic --neighbour exchange --rank-comb --rank-select --rank-mut --pop 10 --rate 0.1 --time 22.41135
+    #             print(command)
+    #             os.system(command)
 
 
